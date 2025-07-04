@@ -1,42 +1,49 @@
 <script lang="ts">
-	import { linear } from 'svelte/easing';
+	import type { Component } from 'svelte';
+	import One from './One.svelte';
+	import Two from './Two.svelte';
 
 	type Step = (u: Unit) => void;
 
 	type Unit = {
+		form: Component | undefined;
 		step: string;
 		data: any;
 	};
+
+	const station = new Map([
+		['one', One],
+		['two', Two]
+	]);
 
 	type Line = Map<string, Step>;
 	const line: Line = new Map([
 		[
 			'start',
 			(u) => {
-				u.data = Object.assign({}, u.data, {my: {obj: 1}})
+				u.form = station.get('one');
 				u.step = 'next';
 			}
 		],
 		[
 			'next',
 			(u) => {
-				u.data = Object.assign({}, u.data, {myother: {obj: 1}})
-				u.step = 'another';
+				if (u.data.name === 'steven') {
+					alert('nope');
+					u.step = 'final';
+				} else {
+					u.step = 'another';
+				}
 			}
 		],
 		[
 			'another',
 			(u) => {
-				u.data = Object.assign({}, u.data, {whatever: {data: 1}})
+				u.form = station.get('two');
 				u.step = 'final';
 			}
 		],
-		[
-			'final',
-			(u) => {
-				u.data = Object.assign({}, u.data, {i: {want: 123}})
-			}
-		]
+		['final', (u) => {}]
 	]);
 
 	function* process(u: Unit) {
@@ -52,6 +59,7 @@
 	}
 
 	const u: Unit = $state({
+		form: undefined,
 		data: {},
 		step: 'start'
 	});
@@ -59,6 +67,8 @@
 	const a = process(u);
 	a.next();
 </script>
+
+<u.form value={u.data} />
 
 <pre>{JSON.stringify(u, null, 2)}</pre>
 <button type="button" onclick={() => a.next()}>next</button>
