@@ -1,64 +1,74 @@
 <script lang="ts">
-	type Project = Set<Stage>;
+	import type { Component } from 'svelte';
+	import One from './One.svelte';
+	import Two from './Two.svelte';
 
-	type QuestionType = string | boolean | number;
-	type Question = { question: string; type: QuestionType; required: Boolean };
-	type Stage = {
-		created: Date;
-		name: string;
-		description: string;
-		updated: Date;
-		questions: Question[];
-		id: ID;
-	};
-    
+	type Step = (u: Unit) => void;
 
-	type Task = {
-		created: Date;
-		updated: Date;
-		name: string;
-		description: string;
-		id: ID;
-		answers: Answers[];
+	type Unit = {
+		form: Component | undefined;
+		step: string;
+		data: any;
 	};
 
-	type Answers = Array<string | boolean | number>;
-	type ID = string | number;
+	const station = new Map([
+		['one', One],
+		['two', Two]
+	]);
 
-    type ProgressRequest = {
-    }
+	type Line = Map<string, Step>;
+	const line: Line = new Map([
+		[
+			'start',
+			(u) => {
+				u.form = station.get('one');
+				u.step = 'next';
+			}
+		],
+		[
+			'next',
+			(u) => {
+				if (u.data.name === 'steven') {
+					alert('nope');
+					u.step = 'final';
+				} else {
+					u.step = 'another';
+				}
+			}
+		],
+		[
+			'another',
+			(u) => {
+				u.form = station.get('two');
+				u.step = 'final';
+			}
+		],
+		['final', (u) => {}]
+	]);
 
-	const makJam: Stage = {
-		created: new Date(),
-		description: 'Make some jam yo',
-		id: Math.random(),
-		name: 'makeJam',
-		updated: new Date()
-	};
+	function* process(u: Unit) {
+		while (true) {
+			if (u.step === 'final') {
+				alert('Project Done');
+				return u;
+			}
+			let step = line.get(u.step);
+			if (!step) throw 'Boom';
+			yield step(u);
+		}
+	}
 
-	const makTin: Stage = {
-		created: new Date(),
-		description: 'Make some tin yo',
-		id: Math.random(),
-		name: 'makeTin',
-		updated: new Date()
-	};
+	const u: Unit = $state({
+		form: undefined,
+		data: {},
+		step: 'start'
+	});
 
-	const jamInTin: Stage = {
-		created: new Date(),
-		description: 'Put some jam in tin yo',
-		id: Math.random(),
-		name: 'Jam in Tin Sir',
-		updated: new Date()
-	};
-
-	const packagetins: Stage = {
-		created: new Date(),
-		description: 'Put some package in my tin yo',
-		id: Math.random(),
-		name: 'package tine',
-		updated: new Date()
-	};
-
-	const mineProject: Project = new Set([packagetins, makJam, makTin, jamInTin]);
+	const a = process(u);
+	a.next();
 </script>
+
+<u.form value={u.data} />
+
+<pre>{JSON.stringify(u, null, 2)}</pre>
+<button type="button" onclick={() => a.next()}>next</button>
