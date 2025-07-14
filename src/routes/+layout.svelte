@@ -2,7 +2,8 @@
 	import '@fontsource-variable/inter-tight';
 	import '../app.css';
 
-	let { children } = $props();
+	let { data, children } = $props();
 </script>
 
+<span>Hi {data.username}</span>
 {@render children()}

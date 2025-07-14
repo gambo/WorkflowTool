@@ -1,12 +1,13 @@
-import type { RequestEvent } from '@sveltejs/kit';
+import { redirect, type RequestEvent } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { sha256 } from '@oslojs/crypto/sha2';
 import { encodeBase64url, encodeHexLowerCase } from '@oslojs/encoding';
 import { db } from '$lib/server/db';
 import * as table from '$lib/server/db/schema';
+import { getRequestEvent } from '$app/server';
 
 const DAY_IN_MS = 1000 * 60 * 60 * 24;
-
+export const LOGIN_ROUTE = "/user/login"
 export const sessionCookieName = 'auth-session';
 
 export function generateSessionToken() {
@@ -78,4 +79,15 @@ export function deleteSessionTokenCookie(event: RequestEvent) {
 	event.cookies.delete(sessionCookieName, {
 		path: '/'
 	});
+}
+
+export function requireLogin() {
+	const { locals, url } = getRequestEvent();
+	if (url.pathname === LOGIN_ROUTE) return
+
+	if (!locals.user) {
+		return redirect(302, LOGIN_ROUTE);
+	}
+
+	return locals.user;
 }
