@@ -1,3 +1,4 @@
+test-results
 node_modules
 
 # Output
@@ -25,3 +26,6 @@ vite.config.ts.timestamp-*
 *storybook.log
 storybook-static
 .pnpm-store
+
+# SQLite
+*.db
