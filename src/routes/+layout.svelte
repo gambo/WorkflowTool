@@ -5,5 +5,7 @@
 	let { data, children } = $props();
 </script>
 
-<span>Hi {data.username}</span>
+{#if data?.username}
+	<span>Hi <a class="text-sky-700 underline" href="/user/profile">{data.username}</a></span>
+{/if}
 {@render children()}

@@ -8,6 +8,7 @@ import * as table from '$lib/server/db/schema';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async (event) => {
+	if (event.url.pathname === auth.LOGIN_ROUTE) return
 	if (event.locals.user) {
 		return redirect(302, auth.LOGIN_ROUTE);
 	}
@@ -50,7 +51,7 @@ export const actions: Actions = {
 		const session = await auth.createSession(sessionToken, existingUser.id);
 		auth.setSessionTokenCookie(event, sessionToken, session.expiresAt);
 
-		return redirect(302, auth.LOGIN_ROUTE);
+		return redirect(302, '/');
 	},
 	register: async (event) => {
 		const formData = await event.request.formData();
@@ -79,6 +80,7 @@ export const actions: Actions = {
 			const sessionToken = auth.generateSessionToken();
 			const session = await auth.createSession(sessionToken, userId);
 			auth.setSessionTokenCookie(event, sessionToken, session.expiresAt);
+			return redirect(302, '/');
 		} catch {
 			return fail(500, { message: 'An error has occurred' });
 		}
