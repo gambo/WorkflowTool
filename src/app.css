@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+@theme {
+	--font-mono: 'Victor Mono Variable', monospace;
+}
+
 html {
 	font-family: 'Inter Tight Variable';
 }

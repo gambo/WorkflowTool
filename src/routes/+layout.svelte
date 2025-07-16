@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '@fontsource-variable/inter-tight';
+	import '@fontsource-variable/victor-mono';
 	import '../app.css';
 
 	let { data, children } = $props();
