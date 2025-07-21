@@ -1,3 +1,7 @@
+<script module>
+	export const label = 'Profile';
+</script>
+
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import type { PageServerData } from './$types';

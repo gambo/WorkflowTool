@@ -1,9 +1,100 @@
 @import 'tailwindcss';
 
-@theme {
+@theme static {
 	--font-mono: 'Victor Mono Variable', monospace;
+	--font-sans: 'Inter Tight Variable';
+	--color-white: #ddd;
+	--color-black: #242424;
+	--ease-nice: cubic-bezier(0.715, -0.185, 0.165, 1.215);
+	--color-theme-50: --color-sky-50;
+	--color-theme-100: --color-sky-100;
+	--color-theme-200: --color-sky-200;
+	--color-theme-300: --color-sky-300;
+	--color-theme-400: --color-sky-400;
+	--color-theme-500: --color-sky-500;
+	--color-theme-600: --color-sky-600;
+	--color-theme-700: --color-sky-700;
+	--color-theme-800: --color-sky-800;
+	--color-theme-900: --color-sky-900;
+	--color-theme-950: --color-sky-950;
+}
+
+@layer base {
+	[data-theme='rose'] {
+		--color-theme-50: --color-rose-50;
+		--color-theme-100: --color-rose-100;
+		--color-theme-200: --color-rose-200;
+		--color-theme-300: --color-rose-300;
+		--color-theme-400: --color-rose-400;
+		--color-theme-500: --color-rose-500;
+		--color-theme-600: --color-rose-600;
+		--color-theme-700: --color-rose-700;
+		--color-theme-800: --color-rose-800;
+		--color-theme-900: --color-rose-900;
+		--color-theme-950: --color-rose-950;
+	}
+
+	@view-transition {
+		navigation: auto;
+	}
+
+	details {
+		--timing: 250ms;
+		inline-size: 50ch;
+
+		@media (prefers-reduced-motion: no-preference) {
+			interpolate-size: allow-keywords;
+		}
+
+		&::details-content {
+			opacity: 0;
+			block-size: 0;
+			overflow-y: clip;
+			transition:
+				content-visibility var(--timing) allow-discrete,
+				opacity var(--timing),
+				block-size var(--timing);
+			transition-timing-function: var(--ease-nice);
+		}
+
+		&[open]::details-content {
+			opacity: 1;
+			block-size: auto;
+		}
+	}
+	select {
+		appearance: none;
+		@supports (appearance: base-select) {
+			&,
+			&::picker(select) {
+				appearance: base-select;
+			}
+		}
+	}
+}
+
+@layer utilities {
+	.bg-stripes {
+		--gap: 6px;
+		background: repeating-linear-gradient(
+			var(--angle, 45deg),
+			var(--bg, transparent) 0,
+			var(--bg, transparent) var(--gap),
+			var(--fg, var(--color-theme-100)) var(--gap),
+			var(--fg, var(--color-theme-100)) calc(var(--gap) + var(--width, 0.5px))
+		);
+	}
+	.bg-dots {
+		background: radial-gradient(
+			circle,
+			var(--fg, var(--color-theme-100)) var(--size, 1.5px),
+			var(--bg, transparent) var(--size, 1.5px)
+		);
+		background-size: var(--space, 4px) var(--space, 4px);
+	}
 }
 
 html {
-	font-family: 'Inter Tight Variable';
+	color-scheme: light dark;
+	font-family: var(--font-sans);
 }
