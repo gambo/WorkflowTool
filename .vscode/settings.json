@@ -7,6 +7,7 @@
         "node_modules": true,
         "e2e": true
     },
+    "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.expand": false,
     "explorer.fileNesting.patterns": {
         "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, bun.lockb, bun.lock, README.md, tsconfig.json, *.config.ts, *.config.js, vitest*, .prettier*, .env*, local.db, .git*, .npmrc"
