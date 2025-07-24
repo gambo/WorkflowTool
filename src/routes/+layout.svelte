@@ -13,17 +13,19 @@
 			<span>Hi <a class="text-theme-700 underline" href="/user/profile">{data.username}</a></span>
 		{/if}
 	</div>
-	<div style:grid-area="menu">
-		<svelte:boundary>
-			{#snippet pending()}
-				loading
-			{/snippet}
-			{#snippet failed()}
-				failed
-			{/snippet}
-			<Menu></Menu>
-		</svelte:boundary>
-	</div>
+	{#if data?.user}
+		<div style:grid-area="menu">
+			<svelte:boundary>
+				{#snippet pending()}
+					loading
+				{/snippet}
+				{#snippet failed()}
+					failed
+				{/snippet}
+				<Menu></Menu>
+			</svelte:boundary>
+		</div>
+	{/if}
 	<main style:grid-area="main" class="p-2">
 		{@render children()}
 	</main>
