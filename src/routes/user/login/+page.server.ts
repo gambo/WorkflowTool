@@ -57,6 +57,8 @@ export const actions: Actions = {
 		const formData = await event.request.formData();
 		const username = formData.get('username');
 		const password = formData.get('password');
+		const created = new Date()
+		const updated = new Date()
 
 		if (!validateUsername(username)) {
 			return fail(400, { message: 'Invalid username' });
@@ -75,7 +77,7 @@ export const actions: Actions = {
 		});
 
 		try {
-			await db.insert(table.user).values({ id: userId, username, passwordHash });
+			await db.insert(table.user).values({ id: userId, username, passwordHash, created, updated });
 
 			const sessionToken = auth.generateSessionToken();
 			const session = await auth.createSession(sessionToken, userId);

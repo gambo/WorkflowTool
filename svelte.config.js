@@ -11,7 +11,12 @@ const config = {
 		}
 	},
 	preprocess: vitePreprocess(),
-	kit: { adapter: adapter() }
+	kit: {
+		adapter: adapter(),
+		experimental: {
+			remoteFunctions: true
+		}
+	}
 };
 
 export default config;

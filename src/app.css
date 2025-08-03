@@ -20,20 +20,6 @@
 }
 
 @layer base {
-	[data-theme='rose'] {
-		--color-theme-50: --color-rose-50;
-		--color-theme-100: --color-rose-100;
-		--color-theme-200: --color-rose-200;
-		--color-theme-300: --color-rose-300;
-		--color-theme-400: --color-rose-400;
-		--color-theme-500: --color-rose-500;
-		--color-theme-600: --color-rose-600;
-		--color-theme-700: --color-rose-700;
-		--color-theme-800: --color-rose-800;
-		--color-theme-900: --color-rose-900;
-		--color-theme-950: --color-rose-950;
-	}
-
 	@view-transition {
 		navigation: auto;
 	}
@@ -95,6 +81,6 @@
 }
 
 html {
-	color-scheme: light dark;
+	/* color-scheme: light dark; */
 	font-family: var(--font-sans);
 }

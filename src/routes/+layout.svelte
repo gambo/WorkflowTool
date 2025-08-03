@@ -3,17 +3,25 @@
 	import '@fontsource-variable/victor-mono';
 	import '../app.css';
 	import Menu from '$lib/Menu.svelte';
+	import { workflow_icon } from '$lib/Icons.svelte';
+	import { Toaster } from 'svelte-french-toast';
 
 	let { data, children } = $props();
 </script>
 
+<Toaster toastOptions={{ position: 'top-right', className: 'mytoast' }} />
 <div class="app">
-	<div style:grid-area="header">
+	<div style:grid-area="header" class="flex items-center border-b p-2 px-8 text-black">
+		<span>
+			{@render workflow_icon()}
+		</span>
 		{#if data?.username}
-			<span>Hi <a class="text-theme-700 underline" href="/user/profile">{data.username}</a></span>
+			<span class="ml-auto">
+				<a class="text-theme-700 underline" href="/user/profile">{data.username}</a>
+			</span>
 		{/if}
 	</div>
-	{#if data?.user}
+	{#if data?.username}
 		<div style:grid-area="menu">
 			<svelte:boundary>
 				{#snippet pending()}
