@@ -10,10 +10,15 @@
 	};
 
 	let { children }: Props = $props();
+	
+	let id: string | undefined = $state();
+	const onedit = (jobid: string) => {
+		id = jobid;
+	};
 </script>
 
-<JobList onedit={(e) => alert(e)} />
-<JobForm />
+<JobList {onedit} />
+<JobForm {id}/>
 <hr class="border-b py-8" />
 <UserList onedit={(id) => alert(id)} />
 <UserForm />
