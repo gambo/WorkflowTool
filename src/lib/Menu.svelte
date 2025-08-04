@@ -32,7 +32,7 @@
 			{/snippet}
 			{#each pages as [key, label]}
 				<li>
-					<a href={key} class="grid px-3 py-2 hover:bg-slate-50 dark:hover:bg-slate-700">{label}</a>
+					<a href={key} class="grid px-3 py-2 hover:bg-slate-200">{label}</a>
 				</li>
 			{/each}
 		</svelte:boundary>

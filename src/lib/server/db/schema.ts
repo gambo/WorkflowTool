@@ -7,9 +7,15 @@ const default_columns = () => {
 		updated: integer('updated', { mode: 'timestamp' }).notNull(),
 	}
 }
+
 export const user = sqliteTable('user', {
 	username: text('username').notNull().unique(),
 	passwordHash: text('password_hash').notNull(),
+	status: text({ enum: ['active', 'inactive'] }),
+	...default_columns(),
+});
+
+export const job = sqliteTable('job', {
 	status: text({ enum: ['active', 'inactive'] }),
 	...default_columns(),
 });
