@@ -34,6 +34,11 @@
 		<div class="grid gap-8">
 			<input name="id" type="hidden" value={data.current?.id} />
 			<Input name="description" label="Description" value={data.current?.description} required />
+			<Select name="priority" label="Priority" value={data.current?.priority}>
+				<option value="high">High</option>
+				<option value="medium">Medium</option>
+				<option value="low">Low</option>
+			</Select>
 			<Select name="status" label="Status" value={data.current?.status}>
 				<option value="active">Active</option>
 				<option value="inactive">Inactive</option>
