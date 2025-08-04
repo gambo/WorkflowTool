@@ -27,6 +27,7 @@ export const add_job = form(async (data) => {
     try {
         await db.insert(table.job).values({
             id: generateId(),
+            description: data.get('description') as string,
             status: data.get('status') as "active" | "inactive",
             created: new Date(),
             updated: new Date(),
@@ -44,6 +45,7 @@ export const edit_job = form(async (data) => {
         await db.update(table.job).set({
             id: data.get('id') as string,
             status: data.get('status') as "active" | "inactive",
+            description: data.get('description') as string,
             created: new Date(),
             updated: new Date(),
         }).where(eq(table.job.id, data.get('id') as string))

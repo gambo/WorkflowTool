@@ -25,6 +25,7 @@
 				<th></th>
 				<th>Id</th>
 				<th>Status</th>
+				<th>Description</th>
 				<th>Created</th>
 				<th>Updated</th>
 			</tr>
@@ -46,6 +47,7 @@
 					</td>
 					<td>{job.id}</td>
 					<td>{job.status}</td>
+					<td>{job.description}</td>
 					<td>{format(job.created)}</td>
 					<td>{format(job.updated)}</td>
 				</tr>

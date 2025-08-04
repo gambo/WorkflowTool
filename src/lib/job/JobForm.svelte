@@ -33,6 +33,7 @@
 	<Fieldset label="Job">
 		<div class="grid gap-8">
 			<input name="id" type="hidden" value={data.current?.id} />
+			<Input name="description" label="Description" value={data.current?.description} required />
 			<Select name="status" label="Status" value={data.current?.status}>
 				<option value="active">Active</option>
 				<option value="inactive">Inactive</option>

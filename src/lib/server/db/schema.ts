@@ -17,6 +17,7 @@ export const user = sqliteTable('user', {
 
 export const job = sqliteTable('job', {
 	status: text({ enum: ['active', 'inactive'] }),
+	description: text('description').notNull(),
 	...default_columns(),
 });
 
