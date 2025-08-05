@@ -1,6 +1,7 @@
 import { form, query } from '$app/server'
 import { db } from '$lib/server/db';
 import * as table from '$lib/server/db/schema';
+import { createInsertSchema } from 'drizzle-zod';
 import { encodeBase32LowerCase } from '@oslojs/encoding';
 import { eq } from 'drizzle-orm';
 import z from 'zod';
@@ -25,15 +26,15 @@ export const job = query(z.union([z.string(), z.undefined()]), (id) => {
 
 export const add_job = form(async (data) => {
     try {
-        await db.insert(table.job).values({
-            id: generateId(),
-            quantity: parseInt(data.get('quantity') ?? "0"),
-            description: data.get('description') as string,
-            priority: data.get('priority') as "high" | "medium" | "low",
-            status: data.get('status') as "active" | "inactive",
-            created: new Date(),
-            updated: new Date(),
-        })
+        const invalid: Record<string, unknown> = Object.fromEntries(data.entries());
+        invalid.id = generateId();
+        invalid.created = new Date();
+        invalid.updated = new Date();
+        invalid.quantity = Number(invalid.quantity ?? 0);
+
+        console.log({ invalid })
+        const value = createInsertSchema(table.job).parse(invalid);
+        await db.insert(table.job).values(value)
         jobs().refresh()
         return { success: true, message: 'Job added successfully' }
     } catch (error) {
@@ -47,7 +48,7 @@ export const edit_job = form(async (data) => {
         await db.update(table.job).set({
             id: data.get('id') as string,
             status: data.get('status') as "active" | "inactive",
-            quantity: data.get('quantity') as string,
+            quantity: Number(data.get('quantity') ?? 0),
             description: data.get('description') as string,
             priority: data.get('priority') as "high" | "medium" | "low",
             created: new Date(),
