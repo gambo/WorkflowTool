@@ -13,5 +13,5 @@
 
 <div class="grid">
 	<label for={name}>{label}</label>
-	<input class="border border-slate-300 bg-slate-50 px-[1rch] py-[1rex]" {name} {...rest} />
+	<input class="border border-slate-300 bg-slate-50 px-[1rch] py-[1rex]" {name} {type} {...rest} />
 </div>
