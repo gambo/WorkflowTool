@@ -23,6 +23,10 @@ export const job = sqliteTable('job', {
 	status: text({ enum: ['active', 'inactive'] }),
 });
 
+export const item = sqliteTable('item', {
+	...default_columns(),	
+	description: text('description').notNull(),
+});
 export const session = sqliteTable('session', {
 	...default_columns(),
 	userId: text('user_id')
