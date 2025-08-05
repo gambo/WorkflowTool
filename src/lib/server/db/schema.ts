@@ -16,10 +16,11 @@ export const user = sqliteTable('user', {
 });
 
 export const job = sqliteTable('job', {
-	status: text({ enum: ['active', 'inactive'] }),
+	...default_columns(),	
+	quantity: integer('quantity').notNull(),
 	description: text('description').notNull(),
 	priority: text({ enum: ['high', 'medium', 'low'] }),
-	...default_columns(),
+	status: text({ enum: ['active', 'inactive'] }),
 });
 
 export const session = sqliteTable('session', {

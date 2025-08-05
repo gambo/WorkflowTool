@@ -33,6 +33,7 @@
 	<Fieldset label="Job">
 		<div class="grid gap-8">
 			<input name="id" type="hidden" value={data.current?.id} />
+			<Input name="quantity" type="number" min="0" label="Quantity" value={data.current?.quantity} required />
 			<Input name="description" label="Description" value={data.current?.description} required />
 			<Select name="priority" label="Priority" value={data.current?.priority}>
 				<option value="high">High</option>

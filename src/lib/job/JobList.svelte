@@ -24,9 +24,10 @@
 			<tr>
 				<th></th>
 				<th>Id</th>
-				<th>Status</th>
+				<th>Quantity</th>
 				<th>Description</th>
 				<th>Priority</th>
+				<th>Status</th>
 				<th>Created</th>
 				<th>Updated</th>
 			</tr>
@@ -47,9 +48,10 @@
 						</div>
 					</td>
 					<td>{job.id}</td>
-					<td>{job.status}</td>
+					<td>{job.quantity}</td>
 					<td>{job.description}</td>
 					<td>{job.priority}</td>
+					<td>{job.status}</td>
 					<td>{format(job.created)}</td>
 					<td>{format(job.updated)}</td>
 				</tr>

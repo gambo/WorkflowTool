@@ -27,6 +27,7 @@ export const add_job = form(async (data) => {
     try {
         await db.insert(table.job).values({
             id: generateId(),
+            quantity: parseInt(data.get('quantity') ?? "0"),
             description: data.get('description') as string,
             priority: data.get('priority') as "high" | "medium" | "low",
             status: data.get('status') as "active" | "inactive",
@@ -46,6 +47,7 @@ export const edit_job = form(async (data) => {
         await db.update(table.job).set({
             id: data.get('id') as string,
             status: data.get('status') as "active" | "inactive",
+            quantity: data.get('quantity') as string,
             description: data.get('description') as string,
             priority: data.get('priority') as "high" | "medium" | "low",
             created: new Date(),
