@@ -24,6 +24,10 @@ export const job = query(z.union([z.string(), z.undefined()]), (id) => {
     })
 })
 
+export const get_job_item_from_id = query(z.string(), (id) => {
+    return db.query.item.findFirst({ where: eq(table.item.id, id) })
+})
+
 export const add_job = form(async (data) => {
     try {
         const invalid: Record<string, unknown> = Object.fromEntries(data.entries());

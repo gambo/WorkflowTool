@@ -1,3 +1,7 @@
+<script module>
+	export const label = 'Job';
+</script>
+
 <script lang="ts">
 	import JobForm from '$lib/job/JobForm.svelte';
 	import JobList from '$lib/job/JobList.svelte';
@@ -10,7 +14,7 @@
 	};
 
 	let { children }: Props = $props();
-	
+
 	let id: string | undefined = $state();
 	const onedit = (jobid: string) => {
 		id = jobid;
@@ -18,7 +22,7 @@
 </script>
 
 <JobList {onedit} />
-<JobForm {id}/>
+<JobForm {id} />
 <hr class="border-b py-8" />
 <UserList onedit={(id) => alert(id)} />
 <UserForm />

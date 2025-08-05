@@ -6,6 +6,7 @@
 	import Input from '$lib/Form/Input.svelte';
 	import Select from '$lib/Form/Select.svelte';
 	import toast from 'svelte-french-toast';
+	import { items } from '$lib/item/item.remote';
 
 	let { id }: { id?: string } = $props();
 
@@ -33,7 +34,14 @@
 	<Fieldset label="Job">
 		<div class="grid gap-8">
 			<input name="id" type="hidden" value={data.current?.id} />
-			<Input name="quantity" type="number" min="0" label="Quantity" value={data.current?.quantity} required />
+			<Input
+				name="quantity"
+				type="number"
+				min="0"
+				label="Quantity"
+				value={data.current?.quantity}
+				required
+			/>
 			<Input name="description" label="Description" value={data.current?.description} required />
 			<Select name="priority" label="Priority" value={data.current?.priority}>
 				<option value="high">High</option>
@@ -43,6 +51,20 @@
 			<Select name="status" label="Status" value={data.current?.status}>
 				<option value="active">Active</option>
 				<option value="inactive">Inactive</option>
+			</Select>
+			<Select name="itemId" label="Item" value={data.current?.itemId}>
+				<option value="">Select an item</option>
+				<svelte:boundary>
+					{#snippet pending()}
+						<option>loading</option>
+					{/snippet}
+					{#snippet failed()}
+						<option>Error loading items</option>
+					{/snippet}
+					{#each await items() as item}
+						<option value={item.id}>{item.description}</option>
+					{/each}
+				</svelte:boundary>
 			</Select>
 			<Button>
 				<span class="flex items-center gap-2">

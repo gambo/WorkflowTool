@@ -1,3 +1,7 @@
+<script module>
+	export const label = 'Item';
+</script>
+
 <script lang="ts">
 	import ItemForm from '$lib/item/ItemForm.svelte';
 	import ItemList from '$lib/item/ItemList.svelte';
@@ -10,7 +14,7 @@
 	};
 
 	let { children }: Props = $props();
-	
+
 	let id: string | undefined = $state();
 	const onedit = (itemid: string) => {
 		id = itemid;
@@ -18,7 +22,7 @@
 </script>
 
 <ItemList {onedit} />
-<ItemForm {id}/>
+<ItemForm {id} />
 <hr class="border-b py-8" />
 <UserList onedit={(id) => alert(id)} />
 <UserForm />

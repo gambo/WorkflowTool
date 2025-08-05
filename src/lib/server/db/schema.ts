@@ -16,15 +16,18 @@ export const user = sqliteTable('user', {
 });
 
 export const job = sqliteTable('job', {
-	...default_columns(),	
+	...default_columns(),
 	quantity: integer('quantity').notNull(),
 	description: text('description').notNull(),
 	priority: text({ enum: ['high', 'medium', 'low'] }),
 	status: text({ enum: ['active', 'inactive'] }),
+	itemId: text('item_id')
+		.notNull()
+		.references(() => item.id),
 });
 
 export const item = sqliteTable('item', {
-	...default_columns(),	
+	...default_columns(),
 	description: text('description').notNull(),
 });
 export const session = sqliteTable('session', {
