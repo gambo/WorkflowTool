@@ -34,7 +34,7 @@
 		"@storybook/addon-vitest": "^9.1.1",
 		"@storybook/sveltekit": "^9.1.1",
 		"@sveltejs/adapter-node": "^5.2.13",
-		"@sveltejs/kit": "^2.27.0",
+		"@sveltejs/kit": "^2.27.1",
 		"@sveltejs/vite-plugin-svelte": "^5.1.1",
 		"@tailwindcss/vite": "^4.1.11",
 		"@types/better-sqlite3": "^7.6.13",
@@ -42,7 +42,7 @@
 		"@vitest/browser": "^3.2.4",
 		"@vitest/coverage-v8": "3.2.4",
 		"drizzle-kit": "^0.30.6",
-		"drizzle-zod": "^0.8.2",
+		"drizzle-zod": "^0.8.3",
 		"eslint": "^9.32.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-storybook": "^9.1.1",
@@ -53,7 +53,7 @@
 		"prettier-plugin-svelte": "^3.4.0",
 		"prettier-plugin-tailwindcss": "^0.6.14",
 		"storybook": "^9.1.1",
-		"svelte": "^5.37.3",
+		"svelte": "^5.38.0",
 		"svelte-check": "^4.3.1",
 		"svelte-french-toast": "^1.2.0",
 		"tailwindcss": "^4.1.11",
@@ -63,7 +63,7 @@
 		"vite-plugin-devtools-json": "^0.2.1",
 		"vitest": "^3.2.4",
 		"vitest-browser-svelte": "^0.1.0",
-		"zod": "^4.0.14"
+		"zod": "^4.0.15"
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [
