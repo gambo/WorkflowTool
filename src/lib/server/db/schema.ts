@@ -1,3 +1,4 @@
+import { relations } from 'drizzle-orm';
 import { sqliteTable, integer, text } from 'drizzle-orm/sqlite-core';
 
 const default_columns = () => {
@@ -26,10 +27,22 @@ export const job = sqliteTable('job', {
 		.references(() => item.id),
 });
 
+export const jobRelation = relations(job, ({ many }) => ({
+	items: many(item)
+}));
+
 export const item = sqliteTable('item', {
 	...default_columns(),
 	description: text('description').notNull(),
 });
+
+export const itemRelation = relations(item, ({ one }) => ({
+	job: one(job, {
+		fields: [item.id],
+		references: [job.id],
+	}),
+}))
+
 export const session = sqliteTable('session', {
 	...default_columns(),
 	userId: text('user_id')
