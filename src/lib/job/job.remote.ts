@@ -42,15 +42,15 @@ export const add_job = form(async (data) => {
 
         const value = createInsertSchema(table.job).parse(invalid);
         await db.insert(table.job).values(value)
-        for (const item in Array(data.getAll('item_description'))) {
+        for (const item of data.getAll('item_description')) {
             await db.insert(table.jobItems).values({
                 id: generateId(),
-                itemId: String(item[0]),
-                jobId: invalid.id as string,
                 created: new Date(),
                 updated: new Date(),
+                jobId: invalid.id as string,
+                itemId: String(item),
             }).catch((e) => {
-                console.log('Failed to insert job item', e);
+                throw new Error(`Failed to add job item: ${e.message}`);
             })
         }
         jobs().refresh()
