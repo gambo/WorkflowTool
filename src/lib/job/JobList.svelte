@@ -1,7 +1,7 @@
 <script lang="ts">
 	import toast from 'svelte-french-toast';
 	import { edit_icon, trash_icon } from '$lib/Icons.svelte';
-	import { delete_job, get_job_item_from_id, jobs } from './job.remote';
+	import { delete_job, jobs } from './job.remote';
 	let { onedit }: { onedit: (id: string) => void } = $props();
 
 	const format = (d: Date) =>
@@ -26,7 +26,6 @@
 				<th>Id</th>
 				<th>Quantity</th>
 				<th>Description</th>
-				<th>Item</th>
 				<th>Priority</th>
 				<th>Status</th>
 				<th>Created</th>
@@ -51,7 +50,6 @@
 					<td>{job.id}</td>
 					<td>{job.quantity}</td>
 					<td>{job.description}</td>
-					<td>{(await get_job_item_from_id(job.itemId))?.description}</td>
 					<td>{job.priority}</td>
 					<td>{job.status}</td>
 					<td>{format(job.created)}</td>

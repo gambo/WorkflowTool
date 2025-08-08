@@ -24,8 +24,12 @@ export const job = query(z.union([z.string(), z.undefined()]), (id) => {
     })
 })
 
-export const get_job_item_from_id = query(z.string(), (id) => {
-    return db.query.item.findFirst({ where: eq(table.item.id, id) })
+
+export const jobItems = query(z.string(), (jobId) => {
+    db.query.item.findMany({
+        where: eq(table.job, jobId),
+    })
+
 })
 
 export const add_job = form(async (data) => {
@@ -36,9 +40,19 @@ export const add_job = form(async (data) => {
         invalid.updated = new Date();
         invalid.quantity = Number(invalid.quantity ?? 0);
 
-        console.log({ invalid })
         const value = createInsertSchema(table.job).parse(invalid);
         await db.insert(table.job).values(value)
+        for (const item in Array(data.getAll('item_description'))) {
+            await db.insert(table.jobItems).values({
+                id: generateId(),
+                itemId: String(item[0]),
+                jobId: invalid.id as string,
+                created: new Date(),
+                updated: new Date(),
+            }).catch((e) => {
+                console.log('Failed to insert job item', e);
+            })
+        }
         jobs().refresh()
         return { success: true, message: 'Job added successfully' }
     } catch (error) {
