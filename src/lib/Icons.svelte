@@ -1,6 +1,21 @@
 <script module>
-	export { workflow_icon, trash_icon, spinner_icon, edit_icon };
+	export { workflow_icon, trash_icon, spinner_icon, edit_icon, add_icon };
 </script>
+
+{#snippet add_icon()}
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		width="16"
+		height="16"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg
+	>
+{/snippet}
 
 {#snippet workflow_icon()}
 	<svg

@@ -41,6 +41,8 @@
 
 <style>
 	.app {
+		width: 1000px;
+		margin: 0 auto;
 		display: grid;
 		grid-template-columns: 200px 1fr;
 		grid-template-areas:

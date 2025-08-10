@@ -4,15 +4,21 @@
 
 	type Props = {
 		children: Snippet;
+		variant?: 'primary' | 'secondary' | 'danger';
 	} & HTMLButtonAttributes;
 
-	let { children, ...rest }: Props = $props();
+	let { variant = 'primary', children, ...rest }: Props = $props();
 	const classes = [
-		'rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:ring-2 focus:ring-blue-400 focus:outline-none',
-		rest.class || ''
+		variant === 'primary' && 'bg-sky-700 hover:bg-sky-600 text-white focus:ring-sky-900',
+		variant === 'secondary' &&
+			'bg-neutral-50 hover:bg-neutral-200  text-neutral-900 focus:ring-blue-900',
+		variant === 'danger' && 'bg-red-50 hover:bg-red-200 text-red-900 focus:ring-blue-900',
+		'rounded px-4 py-2',
+		'flex items-center gap-2 text-sm',
+		rest.class
 	];
 </script>
 
-<button class={classes} {...rest}>
+<button {...rest} class={classes}>
 	{@render children()}
 </button>

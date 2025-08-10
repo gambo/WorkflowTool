@@ -1,7 +1,7 @@
 <script lang="ts">
 	import toast from 'svelte-french-toast';
 	import { edit_icon, trash_icon } from '$lib/Icons.svelte';
-	import { delete_job, jobs } from './job.remote';
+	import { delete_job, job, jobItems, jobs } from './job.remote';
 	let { onedit }: { onedit: (id: string) => void } = $props();
 
 	const format = (d: Date) =>
@@ -19,6 +19,7 @@
 </script>
 
 <svelte:boundary>
+	<pre>{JSON.stringify(await jobs(), null, 2)}</pre>
 	<table>
 		<thead>
 			<tr>
@@ -34,7 +35,7 @@
 		</thead>
 		<tbody>
 			{#each await jobs() as job}
-				<tr>
+				<!-- <tr>
 					<td>
 						<div class="flex items-center gap-1">
 							<form {...delete_job_notify}>
@@ -54,7 +55,7 @@
 					<td>{job.status}</td>
 					<td>{format(job.created)}</td>
 					<td>{format(job.updated)}</td>
-				</tr>
+				</tr> -->
 			{/each}
 		</tbody>
 	</table>

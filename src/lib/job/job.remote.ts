@@ -13,23 +13,30 @@ function generateId() {
     return id;
 }
 
-export const jobs = query(() => {
-    return db.query.job.findMany()
+export const jobs = query(async () => {
+    return db.query.job.findMany({
+        with: {
+            jobItems: {
+                with: {
+                    item: true
+                }
+            }
+        }
+    })
 })
 
 export const job = query(z.union([z.string(), z.undefined()]), (id) => {
     if (!id) return
-    return db.query.job.findFirst({
-        where: eq(table.job.id, id)
-    })
+    return db.select().from(table.job)
+        .where(eq(table.job.id, id))
+        .leftJoin(table.jobItems, eq(table.job.id, table.jobItems.jobId))
+        .leftJoin(table.item, eq(table.jobItems.itemId, table.item.id))
 })
 
 
 export const jobItems = query(z.string(), (jobId) => {
-    db.query.item.findMany({
-        where: eq(table.job, jobId),
-    })
-
+    return db.select().from(table.jobItems).where(eq(table.jobItems.jobId, jobId))
+        .leftJoin(table.item, eq(table.jobItems.itemId, table.item.id))
 })
 
 export const add_job = form(async (data) => {

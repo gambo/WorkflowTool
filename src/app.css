@@ -3,20 +3,7 @@
 @theme static {
 	--font-mono: 'Victor Mono Variable', monospace;
 	--font-sans: 'Inter Tight Variable';
-	--color-white: #ddd;
-	--color-black: #242424;
 	--ease-nice: cubic-bezier(0.715, -0.185, 0.165, 1.215);
-	--color-theme-50: --color-sky-50;
-	--color-theme-100: --color-sky-100;
-	--color-theme-200: --color-sky-200;
-	--color-theme-300: --color-sky-300;
-	--color-theme-400: --color-sky-400;
-	--color-theme-500: --color-sky-500;
-	--color-theme-600: --color-sky-600;
-	--color-theme-700: --color-sky-700;
-	--color-theme-800: --color-sky-800;
-	--color-theme-900: --color-sky-900;
-	--color-theme-950: --color-sky-950;
 }
 
 @layer base {
