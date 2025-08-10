@@ -2,6 +2,7 @@
 	import toast from 'svelte-french-toast';
 	import { edit_icon, trash_icon } from '$lib/Icons.svelte';
 	import { delete_job, job, jobItems, jobs } from './job.remote';
+	import Fieldset from '$lib/Form/Fieldset.svelte';
 	let { onedit }: { onedit: (id: string) => void } = $props();
 
 	const format = (d: Date) =>
@@ -19,46 +20,22 @@
 </script>
 
 <svelte:boundary>
-	<pre>{JSON.stringify(await jobs(), null, 2)}</pre>
-	<table>
-		<thead>
-			<tr>
-				<th></th>
-				<th>Id</th>
-				<th>Quantity</th>
-				<th>Description</th>
-				<th>Priority</th>
-				<th>Status</th>
-				<th>Created</th>
-				<th>Updated</th>
-			</tr>
-		</thead>
-		<tbody>
-			{#each await jobs() as job}
-				<!-- <tr>
-					<td>
-						<div class="flex items-center gap-1">
-							<form {...delete_job_notify}>
-								<button name="id" value={job.id}>
-									{@render trash_icon()}
-								</button>
-							</form>
-							<button type="button" onclick={() => onedit(job.id)}>
-								{@render edit_icon()}
-							</button>
-						</div>
-					</td>
-					<td>{job.id}</td>
-					<td>{job.quantity}</td>
-					<td>{job.description}</td>
-					<td>{job.priority}</td>
-					<td>{job.status}</td>
-					<td>{format(job.created)}</td>
-					<td>{format(job.updated)}</td>
-				</tr> -->
-			{/each}
-		</tbody>
-	</table>
+	{#each await jobs() as job (job.id)}
+		<div class="grid grid-cols-[200px_1fr] gap-2 border border-slate-200 px-4 py-2">
+			<div class="flex flex-col">
+				<div class="font-semibold">{job.priority} {job.description} - {job.status}</div>
+				<div class="text-sm text-slate-600">{job.created.toDateString()}</div>
+			</div>
+			<div>
+				{#each job.jobItems as { item } (item?.id)}
+					<div class="flex items-center justify-between gap-2">
+						<span class="text font-semibold">{item?.description}</span>
+						<span class="text-sm text-slate-600">{item?.created.toDateString()}</span>
+					</div>
+				{/each}
+			</div>
+		</div>
+	{/each}
 	{#snippet pending()}
 		loading
 	{/snippet}
@@ -68,9 +45,4 @@
 </svelte:boundary>
 
 <style>
-	th,
-	td {
-		border: 1px solid #ccc;
-		padding: 1rex 1rch;
-	}
 </style>
