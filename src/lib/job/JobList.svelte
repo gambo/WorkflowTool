@@ -2,7 +2,6 @@
 	import toast from 'svelte-french-toast';
 	import { edit_icon, trash_icon } from '$lib/Icons.svelte';
 	import { delete_job, job, jobItems, jobs } from './job.remote';
-	import Fieldset from '$lib/Form/Fieldset.svelte';
 	let { onedit }: { onedit: (id: string) => void } = $props();
 
 	const format = (d: Date) =>
