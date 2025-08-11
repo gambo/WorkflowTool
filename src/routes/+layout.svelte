@@ -11,9 +11,12 @@
 
 <Toaster toastOptions={{ position: 'top-right', className: 'mytoast' }} />
 <div class="app">
-	<div style:grid-area="header" class="flex items-center border-b p-2 px-8 text-black">
-		<span>
-			{@render workflow_icon()}
+	<div
+		style:grid-area="header"
+		class="mt-2 mb-4 flex items-center rounded border border-slate-200 bg-slate-50 p-2 px-8 text-black"
+	>
+		<span class="flex items-center gap-2 font-semibold text-slate-700">
+			{@render workflow_icon()} Workflow
 		</span>
 		{#if data?.username}
 			<span class="ml-auto">

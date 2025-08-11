@@ -8,7 +8,6 @@
 	import UserForm from '$lib/user/UserForm.svelte';
 	import UserList from '$lib/user/UserList.svelte';
 	import type { Snippet } from 'svelte';
-	import { jobWithItems } from './job.remote';
 
 	type Props = {
 		children: Snippet;
@@ -25,7 +24,4 @@
 	{#snippet failed()}
 		oh no
 	{/snippet}
-	{#each await jobWithItems() as job}
-		<pre>{JSON.stringify(job, null, 2)}</pre>
-	{/each}
 </svelte:boundary>
