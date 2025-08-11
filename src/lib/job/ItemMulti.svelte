@@ -27,7 +27,7 @@
 				{/snippet}
 				<div class="grid grid-cols-[1fr_auto] items-end gap-2">
 					<Input
-						name="quantity"
+						name="itemQuantity"
 						type="number"
 						min="0"
 						label="Quantity"

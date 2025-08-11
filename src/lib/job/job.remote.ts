@@ -54,7 +54,7 @@ export const add_job = form(async (data) => {
                 id: generateId(),
                 created: new Date(),
                 updated: new Date(),
-                quantity: Number(invalid.quantity ?? 0),
+                quantity: Number(invalid.itemQuantity ?? 0),
                 jobId: invalid.id as string,
                 itemId: String(item),
             }).catch((e) => {
