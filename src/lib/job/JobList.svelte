@@ -23,11 +23,13 @@
 		<div class="grid grid-cols-[200px_1fr] gap-2 border border-slate-200 px-4 py-2">
 			<div class="flex flex-col">
 				<div class="font-semibold">{job.priority} {job.description} - {job.status}</div>
+				<div class="font-semibold">{job.quantity} </div>
 				<div class="text-sm text-slate-600">{job.created.toDateString()}</div>
 			</div>
 			<div>
-				{#each job.jobItems as { item } (item?.id)}
+				{#each job.jobItems as { item, quantity } (item?.id)}
 					<div class="flex items-center justify-between gap-2">
+						<span class="text font-semibold">{job.quantity}</span>
 						<span class="text font-semibold">{item?.description}</span>
 						<span class="text-sm text-slate-600">{item?.created.toDateString()}</span>
 					</div>
