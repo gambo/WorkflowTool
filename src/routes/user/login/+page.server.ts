@@ -90,8 +90,11 @@ export const actions: Actions = {
 			const session = await auth.createSession(sessionToken, userId);
 			auth.setSessionTokenCookie(event, sessionToken, session.expiresAt);
 			return redirect(302, '/');
-		} catch {
-			return fail(500, { message: 'An error has occurred' });
+		} catch (e) {
+			if (e instanceof Error) {
+				return fail(500, { message: e.message });
+			}
+			return fail(500, { message: 'unknown error' });
 		}
 		return redirect(302, auth.LOGIN_ROUTE);
 	}

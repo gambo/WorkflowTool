@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { sqliteTable, integer, text } from 'drizzle-orm/sqlite-core';
+import { sqliteTable, integer, text, } from 'drizzle-orm/sqlite-core';
 import { createSchemaFactory } from 'drizzle-zod';
 
 const { createInsertSchema } = createSchemaFactory({ coerce: true })
@@ -73,7 +73,7 @@ export const jobItemsRelations = relations(jobItems, ({ one }) => ({
 }));
 
 export const column = sqliteTable('column', {
-	...default_columns,
+	id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
 	column: text('column').notNull(),
 	color: text('color').notNull(),
 	description: text('description').notNull(),
