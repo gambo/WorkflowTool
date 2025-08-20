@@ -78,7 +78,8 @@ export const column = sqliteTable('column', {
 	column: text('column').notNull(),
 	color: text('color').notNull(),
 	description: text('description').notNull(),
-	order: integer('order')
+	order: integer('order'),
+	check: integer('check', { mode: 'boolean' }).default(false)
 });
 export const column_schema = createInsertSchema(column, {
 	order: (s) => s.gt(10, 'too small').lt(100, 'too big')
