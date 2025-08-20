@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { trash_icon } from '$lib/Icons.svelte';
 	import type { RemoteForm, RemoteQueryFunction } from '@sveltejs/kit';
 	import type { Snippet } from 'svelte';
 
@@ -41,7 +42,9 @@
 						{#each Object.values(item) as i}
 							<td class="border border-slate-200 px-2 py-1">{i}</td>
 						{/each}
-						<td><button name="id" value={item.id} {...del.buttonProps}>del</button></td>
+						<td class="border border-slate-200 px-2 py-1">
+							<button name="id" value={item.id} {...del.buttonProps}>{@render trash_icon()}</button>
+						</td>
 					</tr>
 				{:else}
 					<tr><td>No Entries</td></tr>

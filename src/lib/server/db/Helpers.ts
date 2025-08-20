@@ -14,8 +14,13 @@ type AddToDBRemoteFunction = RemoteForm<{
     error: $ZodIssue[];
 }>;
 
-export const crud = <T extends ZodObject>(table: SQLiteTable<TableConfig>, schema: T) => {
-
+type CrudConfig = {
+    table: SQLiteTable<TableConfig>,
+    schema: ZodObject,
+    label: string
+}
+export const crud = (config: CrudConfig) => {
+    const { table, schema, label } = config
     const list = query(async () => db.select().from(table))
     const add: AddToDBRemoteFunction = form(async (data) => {
         const formdata = Object.fromEntries(data.entries())
@@ -23,7 +28,7 @@ export const crud = <T extends ZodObject>(table: SQLiteTable<TableConfig>, schem
         if (value.success) {
             await db.insert(table).values(value.data)
             list().refresh()
-            return { success: true, message: `Successfully added new ${table.toString()}` }
+            return { success: true, message: `Successfully added new ${label}` }
         } else {
             return { success: false, error: value.error.issues }
         }
