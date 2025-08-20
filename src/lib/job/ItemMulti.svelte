@@ -26,6 +26,15 @@
 					<pre>{JSON.stringify(e, null, 2)}</pre>
 				{/snippet}
 				<div class="grid grid-cols-[1fr_auto] items-end gap-2">
+					<Input
+						name="itemQuantity"
+						type="number"
+						min="0"
+						label="Quantity"
+						value=''
+						required
+					/>
+					<br />
 					<Select name="item_description" label="Item">
 						<option disabled value="">Select an item</option>
 						{#each await items() as item}

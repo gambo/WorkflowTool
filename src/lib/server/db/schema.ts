@@ -41,6 +41,7 @@ export const item = sqliteTable('item', {
 
 export const jobItems = sqliteTable('job_items', {
 	...default_columns(),
+	quantity: integer('quantity').notNull(),
 	jobId: text('job_id').references(() => job.id, {
 		onDelete: 'cascade',
 	}),
