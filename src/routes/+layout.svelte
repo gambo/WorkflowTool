@@ -2,54 +2,13 @@
 	import '@fontsource-variable/inter-tight';
 	import '@fontsource-variable/victor-mono';
 	import '../app.css';
-	import Menu from '$lib/Menu.svelte';
-	import { workflow_icon } from '$lib/Icons.svelte';
-	import { Toaster } from 'svelte-french-toast';
+	import MainMenu from '$lib/Components/MainMenu.svelte';
+	import App from '$lib/Components/App.svelte';
 
 	let { data, children } = $props();
 </script>
 
-<Toaster toastOptions={{ position: 'top-right', className: 'mytoast' }} />
-<div class="app">
-	<div
-		style:grid-area="header"
-		class="mt-2 mb-4 flex items-center rounded border border-slate-200 bg-slate-50 p-2 px-8 text-black"
-	>
-		<span class="flex items-center gap-2 font-semibold text-slate-700">
-			{@render workflow_icon()} Workflow
-		</span>
-		{#if data?.username}
-			<span class="ml-auto">
-				<a class="text-theme-700 underline" href="/user/profile">{data.username}</a>
-			</span>
-		{/if}
-	</div>
-	{#if data?.username}
-		<div style:grid-area="menu">
-			<svelte:boundary>
-				{#snippet pending()}
-					loading
-				{/snippet}
-				{#snippet failed()}
-					failed
-				{/snippet}
-				<Menu></Menu>
-			</svelte:boundary>
-		</div>
-	{/if}
-	<main style:grid-area="main" class="p-2">
-		{@render children()}
-	</main>
-</div>
-
-<style>
-	.app {
-		width: 1000px;
-		margin: 0 auto;
-		display: grid;
-		grid-template-columns: 200px 1fr;
-		grid-template-areas:
-			'header header header'
-			'menu main main';
-	}
-</style>
+<App>
+	<MainMenu />
+	{@render children()}
+</App>

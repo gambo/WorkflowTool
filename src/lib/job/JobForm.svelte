@@ -6,7 +6,6 @@
 	import Input from '$lib/Form/Input.svelte';
 	import Select from '$lib/Form/Select.svelte';
 	import toast from 'svelte-french-toast';
-	import { items } from '$lib/item/item.remote';
 	import ItemMulti from './ItemMulti.svelte';
 
 	let { id }: { id?: string } = $props();
@@ -19,10 +18,10 @@
 			pending = true;
 			await submit();
 			if (!action.result) return;
-			if (action.result.success) {
+			if (action.result.success === true) {
 				toast.success(action.result.message ?? 'User saved successfully');
 			} else {
-				toast.error(action.result.error ?? 'An error occurred');
+				toast.error(action.result.message ?? 'An error occurred');
 			}
 			form.reset();
 			pending = false;

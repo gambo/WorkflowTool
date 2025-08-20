@@ -1,6 +1,22 @@
 <script module>
-	export { workflow_icon, trash_icon, spinner_icon, edit_icon, add_icon };
+	export { workflow_icon, trash_icon, spinner_icon, edit_icon, add_icon, priority_up };
 </script>
+
+{#snippet priority_up()}
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		width="16"
+		height="16"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		class="lucide lucide-arrow-up-icon lucide-arrow-up"
+		><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></svg
+	>
+{/snippet}
 
 {#snippet add_icon()}
 	<svg

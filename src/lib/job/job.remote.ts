@@ -27,10 +27,16 @@ export const jobs = query(async () => {
 
 export const job = query(z.union([z.string(), z.undefined()]), (id) => {
     if (!id) return
-    return db.select().from(table.job)
-        .where(eq(table.job.id, id))
-        .leftJoin(table.jobItems, eq(table.job.id, table.jobItems.jobId))
-        .leftJoin(table.item, eq(table.jobItems.itemId, table.item.id))
+    return db.query.job.findFirst({
+        where: eq(table.job.id, id),
+        with: {
+            jobItems: {
+                with: {
+                    item: true
+                }
+            }
+        }
+    })
 })
 
 
@@ -40,15 +46,16 @@ export const jobItems = query(z.string(), (jobId) => {
 })
 
 export const add_job = form(async (data) => {
-    try {
-        const invalid: Record<string, unknown> = Object.fromEntries(data.entries());
-        invalid.id = generateId();
-        invalid.created = new Date();
-        invalid.updated = new Date();
-        invalid.quantity = Number(invalid.quantity ?? 0);
+    const invalid: Record<string, unknown> = Object.fromEntries(data.entries());
+    console.log(123, Object.fromEntries(data.entries()))
+    invalid.id = generateId();
+    invalid.created = new Date();
+    invalid.updated = new Date();
+    invalid.quantity = Number(invalid.quantity ?? 0);
 
-        const value = createInsertSchema(table.job).parse(invalid);
-        await db.insert(table.job).values(value)
+    const value = createInsertSchema(table.job).safeParse(invalid);
+    if (value.success) {
+        await db.insert(table['job']).values(value.data)
         for (const item of data.getAll('item_description')) {
             await db.insert(table.jobItems).values({
                 id: generateId(),
@@ -56,17 +63,20 @@ export const add_job = form(async (data) => {
                 updated: new Date(),
                 jobId: invalid.id as string,
                 itemId: String(item),
-            }).catch((e) => {
-                throw new Error(`Failed to add job item: ${e.message}`);
             })
         }
-        jobs().refresh()
+        await jobs().refresh()
         return { success: true, message: 'Job added successfully' }
-    } catch (error) {
-        const message = error instanceof Error ? error.message : 'Unknown error';
-        return { success: false, error: message }
+    } else {
+        console.log(value)
+        return db_failure(value.error)
     }
 })
+
+const db_failure = (error: unknown) => {
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    return { success: false, message }
+}
 
 export const edit_job = form(async (data) => {
     try {
@@ -76,16 +86,12 @@ export const edit_job = form(async (data) => {
             quantity: Number(data.get('quantity') ?? 0),
             description: data.get('description') as string,
             priority: data.get('priority') as "high" | "medium" | "low",
-            created: new Date(),
             updated: new Date(),
         }).where(eq(table.job.id, data.get('id') as string))
-        jobs().refresh()
+
+        await jobs().refresh()
         return { success: true, message: 'Job edited successfully' }
-    } catch (error) {
-        const message = error instanceof Error ? error.message : 'Unknown error';
-        console.log({ error })
-        return { success: false, error: message }
-    }
+    } catch (error) { return db_failure(error) }
 })
 
 
@@ -93,10 +99,7 @@ export const delete_job = form(async (data) => {
     try {
         const jobId = data.get('jobId') as string;
         await db.delete(table.job).where(eq(table.job.id, jobId));
-        jobs().refresh()
+        await jobs().refresh()
         return { success: true }
-    } catch (e) {
-        console.log(222, { e })
-        return { error: 'Failed to delete job' }
-    }
+    } catch (e) { return db_failure(e) }
 })

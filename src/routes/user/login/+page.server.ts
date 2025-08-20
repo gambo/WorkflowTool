@@ -57,8 +57,15 @@ export const actions: Actions = {
 		const formData = await event.request.formData();
 		const username = formData.get('username');
 		const password = formData.get('password');
+		const email = formData.get('email');
 		const created = new Date()
 		const updated = new Date()
+		if (!email) {
+			return fail(400, { message: 'Email address required' })
+		}
+		if (typeof email !== 'string') {
+			return fail(400, { message: 'Email must be a string' })
+		}
 
 		if (!validateUsername(username)) {
 			return fail(400, { message: 'Invalid username' });
@@ -77,7 +84,7 @@ export const actions: Actions = {
 		});
 
 		try {
-			await db.insert(table.user).values({ id: userId, username, passwordHash, created, updated });
+			await db.insert(table.user).values({ id: userId, email, username, passwordHash, created, updated });
 
 			const sessionToken = auth.generateSessionToken();
 			const session = await auth.createSession(sessionToken, userId);

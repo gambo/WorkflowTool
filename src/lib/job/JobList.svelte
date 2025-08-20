@@ -7,41 +7,48 @@
 	const format = (d: Date) =>
 		`${String(d.getDate()).padStart(2, '0')} ${d.toLocaleString('en', { month: 'short' })} ${d.getFullYear()} - ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
 
-	const delete_job_notify = delete_job.enhance(async ({ data, submit }) => {
+	const delete_job_notify = delete_job.buttonProps.enhance(async ({ data, submit }) => {
 		try {
 			await submit();
 			toast.success('Job deleted successfully');
-			console.log('cool');
+			console.log('toast?');
 		} catch {
 			toast.error('Failed to delete Job');
 		}
 	});
 </script>
 
-<svelte:boundary>
-	{#each await jobs() as job (job.id)}
-		<div class="grid grid-cols-[200px_1fr] gap-2 border border-slate-200 px-4 py-2">
-			<div class="flex flex-col">
-				<div class="font-semibold">{job.priority} {job.description} - {job.status}</div>
-				<div class="text-sm text-slate-600">{job.created.toDateString()}</div>
-			</div>
-			<div>
-				{#each job.jobItems as { item } (item?.id)}
-					<div class="flex items-center justify-between gap-2">
-						<span class="text font-semibold">{item?.description}</span>
-						<span class="text-sm text-slate-600">{item?.created.toDateString()}</span>
+<form>
+	<svelte:boundary>
+		{#each await jobs() as job (job.id)}
+			<div class="flex">
+				<div class="grid grid-cols-[200px_1fr] gap-2 border border-slate-200 px-4 py-2">
+					<div class="flex flex-col">
+						<div class="font-semibold">{job.priority} {job.description} - {job.status}</div>
+						<div class="text-sm text-slate-600">{job.created.toDateString()}</div>
 					</div>
-				{/each}
+					<div>
+						{#each job.jobItems as { item } (item?.id)}
+							<div class="flex items-center justify-between gap-2">
+								<span class="text font-semibold">{item?.description}</span>
+								<span class="text-sm text-slate-600">{item?.created.toDateString()}</span>
+							</div>
+						{/each}
+					</div>
+				</div>
+				<button name="jobId" value={job.id} {...delete_job_notify} class="ml-2">
+					{@render trash_icon()} click
+				</button>
 			</div>
-		</div>
-	{/each}
-	{#snippet pending()}
-		loading
-	{/snippet}
-	{#snippet failed()}
-		something went wrong
-	{/snippet}
-</svelte:boundary>
+		{/each}
+		{#snippet pending()}
+			loading
+		{/snippet}
+		{#snippet failed()}
+			something went wrong
+		{/snippet}
+	</svelte:boundary>
+</form>
 
 <style>
 </style>

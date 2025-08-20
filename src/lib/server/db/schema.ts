@@ -1,6 +1,8 @@
 import { relations } from 'drizzle-orm';
 import { sqliteTable, integer, text } from 'drizzle-orm/sqlite-core';
+import { createSchemaFactory } from 'drizzle-zod';
 
+const { createInsertSchema } = createSchemaFactory({ coerce: true })
 const default_columns = () => {
 	return {
 		id: text('id').primaryKey(),
@@ -12,9 +14,16 @@ const default_columns = () => {
 export const user = sqliteTable('user', {
 	username: text('username').notNull().unique(),
 	passwordHash: text('password_hash').notNull(),
+	email: text('email').notNull().unique(),
 	status: text({ enum: ['active', 'inactive'] }),
 	...default_columns(),
 });
+
+export const customer = sqliteTable('customer', {
+	name: text('name').notNull().unique(),
+	...default_columns(),
+});
+
 
 export const job = sqliteTable('job', {
 	...default_columns(),
@@ -62,6 +71,17 @@ export const jobItemsRelations = relations(jobItems, ({ one }) => ({
 		references: [item.id],
 	}),
 }));
+
+export const column = sqliteTable('column', {
+	...default_columns,
+	column: text('column').notNull(),
+	color: text('color').notNull(),
+	description: text('description').notNull(),
+	order: integer('order')
+});
+export const column_schema = createInsertSchema(column, {
+	order: (s) => s.gt(10, 'too small').lt(100, 'too big')
+})
 
 
 export type Session = typeof session.$inferSelect;

@@ -1,7 +1,3 @@
-<script module>
-	export const label = 'Home';
-</script>
-
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
