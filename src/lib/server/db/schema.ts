@@ -1,32 +1,41 @@
 import { relations } from 'drizzle-orm';
-import { sqliteTable, integer, text, } from 'drizzle-orm/sqlite-core';
-import { createSchemaFactory } from 'drizzle-zod';
+import { sqliteTable, integer, text, int, } from 'drizzle-orm/sqlite-core';
+import { createInsertSchema } from 'drizzle-zod';
 
-const { createInsertSchema } = createSchemaFactory({ coerce: true })
-const default_columns = () => {
-	return {
-		id: text('id').primaryKey(),
-		created: integer('created', { mode: 'timestamp' }).notNull(),
-		updated: integer('updated', { mode: 'timestamp' }).notNull(),
-	}
-}
+export const column = sqliteTable('column', {
+	id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
+	created: integer('created', { mode: 'timestamp' }).notNull().default(new Date()),
+	column: text('column').notNull(),
+	color: text('color').notNull(),
+	description: text('description').notNull(),
+	order: integer('order'),
+	check: integer('check', { mode: 'boolean' }).default(false)
+});
+
+export const column_schema = createInsertSchema(column, {
+	description: s => s.max(4),
+	order: (s) => s.gt(10, 'too small bro').lt(100, 'too big')
+})
 
 export const user = sqliteTable('user', {
+	id: text().primaryKey(),
+	created: integer('created', { mode: 'timestamp' }).notNull().default(new Date()),
 	username: text('username').notNull().unique(),
 	passwordHash: text('password_hash').notNull(),
 	email: text('email').notNull().unique(),
-	status: text({ enum: ['active', 'inactive'] }),
-	...default_columns(),
+	status: text({ enum: ['active', 'inactive'] }).notNull().default('active'),
 });
 
 export const customer = sqliteTable('customer', {
+	id: int({ mode: 'number' }).primaryKey({ autoIncrement: true }),
+	created: integer('created', { mode: 'timestamp' }).notNull().default(new Date()),
 	name: text('name').notNull().unique(),
-	...default_columns(),
 });
 
 
 export const job = sqliteTable('job', {
-	...default_columns(),
+	id: int({ mode: 'number' }).primaryKey({ autoIncrement: true }),
+	created: integer('created', { mode: 'timestamp' }).notNull().default(new Date()),
 	quantity: integer('quantity').notNull(),
 	description: text('description').notNull(),
 	priority: text({ enum: ['high', 'medium', 'low'] }),
@@ -35,12 +44,14 @@ export const job = sqliteTable('job', {
 
 
 export const item = sqliteTable('item', {
-	...default_columns(),
+	id: int({ mode: 'number' }).primaryKey({ autoIncrement: true }),
+	created: integer('created', { mode: 'timestamp' }).notNull().default(new Date()),
 	description: text('description').notNull(),
 });
 
 export const jobItems = sqliteTable('job_items', {
-	...default_columns(),
+	id: int({ mode: 'number' }).primaryKey({ autoIncrement: true }),
+	created: integer('created', { mode: 'timestamp' }).notNull().default(new Date()),
 	quantity: integer('quantity').notNull(),
 	jobId: text('job_id').references(() => job.id, {
 		onDelete: 'cascade',
@@ -51,7 +62,8 @@ export const jobItems = sqliteTable('job_items', {
 })
 
 export const session = sqliteTable('session', {
-	...default_columns(),
+	id: int({ mode: 'number' }).primaryKey({ autoIncrement: true }),
+	created: integer('created', { mode: 'timestamp' }).notNull().default(new Date()),
 	userId: text('user_id')
 		.notNull()
 		.references(() => user.id),
@@ -72,18 +84,6 @@ export const jobItemsRelations = relations(jobItems, ({ one }) => ({
 		references: [item.id],
 	}),
 }));
-
-export const column = sqliteTable('column', {
-	id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
-	column: text('column').notNull(),
-	color: text('color').notNull(),
-	description: text('description').notNull(),
-	order: integer('order'),
-	check: integer('check', { mode: 'boolean' }).default(false)
-});
-export const column_schema = createInsertSchema(column, {
-	order: (s) => s.gt(10, 'too small').lt(100, 'too big')
-})
 
 
 export type Session = typeof session.$inferSelect;

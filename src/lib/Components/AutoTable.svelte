@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { trash_icon } from '$lib/Icons.svelte';
 	import type { RemoteForm, RemoteQueryFunction } from '@sveltejs/kit';
-	import type { Snippet } from 'svelte';
+	import type { $ZodIssue } from 'zod/v4/core';
 
 	type Props = {
 		list: RemoteQueryFunction<void, Record<string, any>[]>;
-		del: RemoteForm<void>;
+		del: RemoteForm<{ status: string; message: string }>;
 	};
 
 	let { list, del }: Props = $props();
@@ -31,9 +31,7 @@
 							{/each}
 						{/if}
 					{/each}
-					<td class="border border-slate-200 px-2 py-1 font-semibold first-letter:uppercase"
-						>Operations</td
-					>
+					<td class="border border-slate-200 px-2 py-1 font-semibold first-letter:uppercase"></td>
 				</tr>
 			</thead>
 			<tbody>

@@ -4,7 +4,9 @@
 	import type { $ZodIssue } from 'zod/v4/core';
 
 	type Props = {
-		form: RemoteForm<{ success: true; message: string } | { success: false; error: $ZodIssue[] }>;
+		form: RemoteForm<
+			{ status: 'success'; message: string } | { status: 'fail'; error: $ZodIssue[] }
+		>;
 	};
 
 	let { form }: Props = $props();
@@ -16,7 +18,7 @@
 	{/if}
 
 	{#if form.result}
-		{#if form.result.success === true}
+		{#if form.result.status === 'success'}
 			<div class="rounded bg-green-200 px-4 py-2 text-green-900">
 				{form.result.message}
 			</div>

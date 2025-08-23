@@ -59,7 +59,6 @@ export const actions: Actions = {
 		const password = formData.get('password');
 		const email = formData.get('email');
 		const created = new Date()
-		const updated = new Date()
 		if (!email) {
 			return fail(400, { message: 'Email address required' })
 		}
@@ -84,19 +83,19 @@ export const actions: Actions = {
 		});
 
 		try {
-			await db.insert(table.user).values({ id: userId, email, username, passwordHash, created, updated });
+			await db.insert(table.user).values({ id: userId, email, username, passwordHash, created });
 
 			const sessionToken = auth.generateSessionToken();
 			const session = await auth.createSession(sessionToken, userId);
 			auth.setSessionTokenCookie(event, sessionToken, session.expiresAt);
-			return redirect(302, '/');
+			throw redirect(302, '/');
 		} catch (e) {
 			if (e instanceof Error) {
-				return fail(500, { message: e.message });
+				return fail(500, { message: `1${e.message}` });
 			}
+			console.log(123, e)
 			return fail(500, { message: 'unknown error' });
 		}
-		return redirect(302, auth.LOGIN_ROUTE);
 	}
 };
 

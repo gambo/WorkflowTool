@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import { list, add, del } from './ok.remote';
+	import { list, add, del, edit, find_by_id } from './ok.remote';
 	import FormMessages from '$lib/Form/FormMessages.svelte';
 	import AutoTable from '$lib/Components/AutoTable.svelte';
 	import Input from '$lib/Form/Input.svelte';
@@ -13,6 +13,16 @@
 	let { children }: Props = $props();
 	let id: string | undefined = $state();
 </script>
+
+<svelte:boundary>
+	{#snippet pending()}
+		loading
+	{/snippet}
+	{#snippet failed()}
+		oopsy
+	{/snippet}
+	{#each await list() as item}{/each}
+</svelte:boundary>
 
 <div class="m-8 w-90">
 	<AutoTable {list} {del} />
