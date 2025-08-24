@@ -1,8 +1,8 @@
 import { form, query } from "$app/server";
 import { db } from "$lib/server/db";
 import type { RemoteForm } from "@sveltejs/kit";
-import { eq, Table, type SQLWrapper } from 'drizzle-orm'
-import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
+import { eq, getTableColumns, Table } from 'drizzle-orm'
+import { createUpdateSchema, type BuildRefine } from "drizzle-zod";
 import z from 'zod'
 import type { $ZodIssue } from 'zod/v4/core';
 
@@ -17,24 +17,26 @@ type EditType = RemoteForm<
 
 type CrudConfig<T extends Table> = {
     label: string;
-    table: T & {
-        id: SQLWrapper
-    }
+    table: T
+    refinements: RefineSchema<T>
 }
+export type RefineSchema<TTable extends Table> = BuildRefine<
+    TTable["_"]["columns"],
+    undefined
+>;
 
 export const crud = <T extends Table>(config: CrudConfig<T>) => {
-    const { table, label } = config
-    const insertSchema = createInsertSchema(table);
-    const editSchema = createUpdateSchema(table);
-
+    const { label, table, refinements } = config;
+    const insertSchema = createUpdateSchema(table, refinements);
+    const editSchema = createUpdateSchema(table, refinements);
     const list = query(async () => {
-        return await db.select().from(table)
+        const ret = await db.select().from(table as T)
+        return ret
     })
 
     const find_by_id = query(z.int(), async (id_to_del) => {
-        if ('id' in table) {
-            return await db.select().from(table).where(eq(table.id, id_to_del))
-        }
+        const { id } = getTableColumns(table)
+        return await db.select().from(table).where(eq(id, id_to_del))
     })
 
 
@@ -53,13 +55,13 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
 
     const edit: EditType = form(async (data) => {
         const invalid = Object.fromEntries(data.entries())
+        const id_to_edit = invalid['id']
         const values = editSchema.safeParse(invalid)
         if (values.success) {
-            if ('id' in values.data) {
-                await db.update(table).set(values.data).where(eq(table.id, values.data.id))
-                await list().refresh()
-                return { status: 'success', message: `Successfully edited new column` }
-            }
+            const { id } = getTableColumns(table)
+            await db.update(table).set(values.data).where(eq(id, id_to_edit))
+            await list().refresh()
+            return { status: 'success', message: `Successfully edited new column` }
         } else {
             return { status: 'fail', error: values.error.issues }
         }
@@ -68,7 +70,8 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
     const del = form(async (data) => {
         const id_to_delete = data.get('id')
         if (typeof id_to_delete === 'string') {
-            await db.delete(table).where(eq(table.id, parseInt(id_to_delete)))
+            const { id } = getTableColumns(table)
+            await db.delete(table).where(eq(id, parseInt(id_to_delete)))
             await list().refresh()
             return { status: 'success', message: 'Successfully deleted' }
         } else {

@@ -10,7 +10,6 @@
 		children: Snippet;
 	};
 
-	let { children }: Props = $props();
 	let id: string | undefined = $state();
 </script>
 
@@ -21,7 +20,9 @@
 	{#snippet failed()}
 		oopsy
 	{/snippet}
-	{#each await list() as item}{/each}
+	{#each await find_by_id(12) as item}
+		{item.description}
+	{/each}
 </svelte:boundary>
 
 <div class="m-8 w-90">
