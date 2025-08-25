@@ -1,11 +1,11 @@
-<script lang="ts" generics="T extends Record<string, any>[] = Record<string, any>[]">
+<script lang="ts" generics="T extends Array<Record<string, any>> = Record<string, any>[]">
 	import { trash_icon } from '$lib/Icons.svelte';
 	import type { RemoteForm, RemoteQueryFunction } from '@sveltejs/kit';
 
 	type Props = {
 		list: RemoteQueryFunction<void, T>;
 		del: RemoteForm<{ status: string; message: string }>;
-		config?: Record<string, 'date' | 'boolean' | 'number'>;
+		config?: Partial<Record<keyof T[number], 'date' | 'boolean' | 'number'>>;
 	};
 
 	let { list, del, config }: Props = $props();

@@ -1,23 +1,35 @@
-<script module>
-	export const label = 'Item';
-</script>
-
 <script lang="ts">
-	import ItemForm from '$lib/item/ItemForm.svelte';
-	import ItemList from '$lib/item/ItemList.svelte';
 	import type { Snippet } from 'svelte';
+	import { list, add, del, edit, find_by_id } from './item.remote';
+	import AutoTable from '$lib/Components/AutoTable.svelte';
+	import AutoForm from '$lib/Form/AutoForm.svelte';
 
 	type Props = {
 		children: Snippet;
 	};
 
-	let { children }: Props = $props();
-
-	let id: string | undefined = $state();
-	const onedit = (itemid: string) => {
-		id = itemid;
-	};
+	let { data } = $props();
 </script>
 
-<ItemList {onedit} />
-<ItemForm {id} />
+<svelte:boundary>
+	{#snippet pending()}
+		loading
+	{/snippet}
+	{#snippet failed()}
+		oopsy
+	{/snippet}
+	{#each await find_by_id(12) as item}
+		{item.description}
+	{/each}
+</svelte:boundary>
+
+<div class="m-8 w-90">
+	<AutoTable
+		{list}
+		{del}
+		config={{
+			created: 'date'
+		}}
+	/>
+	<AutoForm schema={data.form} {add} />
+</div>

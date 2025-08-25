@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import { list, add, del, edit, find_by_id } from './ok.remote';
+	import { list, add, del, edit, find_by_id } from './column.remote';
 	import FormMessages from '$lib/Form/FormMessages.svelte';
 	import AutoTable from '$lib/Components/AutoTable.svelte';
 	import Input from '$lib/Form/Input.svelte';
@@ -26,7 +26,15 @@
 </svelte:boundary>
 
 <div class="m-8 w-90">
-	<AutoTable {list} {del} />
+	<AutoTable
+		{list}
+		{del}
+		config={{
+			created: 'date',
+			order: 'number',
+			check: 'boolean'
+		}}
+	/>
 	<FormMessages form={add} />
 	<form {...add}>
 		<Input name="column" label="Name" required />

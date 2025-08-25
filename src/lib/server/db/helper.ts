@@ -34,11 +34,11 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
         return ret
     })
 
-    const find_by_id = query(z.int(), async (id_to_del) => {
+    const find_by_id = query(z.union([z.int(), z.string()]).optional(), async (id_to_del) => {
+        if (!id_to_del) throw new Error('No ID provided')
         const { id } = getTableColumns(table)
         return await db.select().from(table).where(eq(id, id_to_del))
     })
-
 
     const add: AddType = form(async (data) => {
         const invalid = Object.fromEntries(data.entries())

@@ -3,7 +3,9 @@
 	import Pipe from './Pipe.svelte';
 </script>
 
-<Pipe class="p-2">
-	<Logo />
-	<span>Workflow</span>
-</Pipe>
+<a href="/">
+	<Pipe class="p-2 text-xs font-semibold">
+		<Logo />
+		<span>Workflow</span>
+	</Pipe>
+</a>

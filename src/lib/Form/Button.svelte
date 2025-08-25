@@ -1,10 +1,11 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import type { HTMLButtonAttributes, HTMLInputAttributes } from 'svelte/elements';
+	import type { ClassValue, HTMLButtonAttributes, HTMLInputAttributes } from 'svelte/elements';
 
 	type Props = {
 		children: Snippet;
 		variant?: 'primary' | 'secondary' | 'danger';
+		class: ClassValue;
 	} & HTMLButtonAttributes;
 
 	let { variant = 'primary', children, ...rest }: Props = $props();
