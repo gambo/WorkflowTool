@@ -3,6 +3,7 @@
 	import Field from './Field.svelte';
 	import Input from './Input.svelte';
 	import Select from './Select.svelte';
+	import { titlecase } from '$lib';
 
 	type Props = {
 		name: string;
@@ -11,7 +12,6 @@
 	};
 
 	let { name, data, required }: Props = $props();
-	const titlecase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 </script>
 
 {#if data.widget === 'hidden'}

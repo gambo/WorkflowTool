@@ -4,11 +4,21 @@
 	import '../app.css';
 	import MainMenu from '$lib/Components/MainMenu.svelte';
 	import App from '$lib/Components/App.svelte';
+	import { titlecase } from '$lib';
 
 	let { data, children } = $props();
 </script>
 
 <App>
 	<MainMenu />
-	{@render children()}
+	<div class="grid grid-cols-[min-content_1fr]">
+		<ul class="text-sm text-slate-700">
+			{#each data.menu as item}
+				<li><a class="px-3 py-2" href="/{item}">{titlecase(item)}</a></li>
+			{/each}
+		</ul>
+		<div>
+			{@render children()}
+		</div>
+	</div>
 </App>

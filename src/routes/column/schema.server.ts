@@ -14,10 +14,10 @@ export const column = sqliteTable('column', {
 
 export const refinements = {
     id: z => z.meta({ widget: 'hidden' }),
-    color: z => z.meta({ widget: 'color' }),
+    color: z => z.meta({ widget: 'color', thinga: 'thang' }),
     created: z => z.meta({ widget: 'hidden' }),
-    order: z.coerce.number(),
-    check: z.coerce.boolean()
+    order: z.coerce.number().min(10, "Order must be at least 10").max(1000, "Order must be at most 1000"),
+    check: z.coerce.boolean().optional()
 } satisfies BuildRefine<typeof column, undefined>
 
 export const schema = createInsertSchema(column, refinements);

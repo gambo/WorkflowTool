@@ -3,6 +3,7 @@ import { relations } from 'drizzle-orm';
 import { sqliteTable, integer, text, int, } from 'drizzle-orm/sqlite-core';
 export { column } from '$routes/column/schema.server';
 export { job } from '$routes/job/schema.server';
+export { customer } from '$routes/customer/schema.server';
 
 
 export const user = sqliteTable('user', {
@@ -14,11 +15,7 @@ export const user = sqliteTable('user', {
 	status: text({ enum: ['active', 'inactive'] }).notNull().default('active'),
 });
 
-export const customer = sqliteTable('customer', {
-	id: int({ mode: 'number' }).primaryKey({ autoIncrement: true }),
-	created: integer('created', { mode: 'timestamp' }).notNull().default(new Date()),
-	name: text('name').notNull().unique(),
-});
+
 
 
 
