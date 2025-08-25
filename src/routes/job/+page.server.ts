@@ -1,10 +1,8 @@
-import { job } from '$lib/server/db/schema';
-import { createInsertSchema } from 'drizzle-zod';
+import { schema } from './schema.server';
 import z from 'zod';
 export async function load() {
 
-    const ok = createInsertSchema(job);
-    const form = z.toJSONSchema(ok, {
+    const form = z.toJSONSchema(schema, {
         unrepresentable: "any",
         override: (ctx) => {
             const def = ctx.zodSchema._zod.def;

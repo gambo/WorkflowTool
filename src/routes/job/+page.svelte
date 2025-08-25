@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import { list, add, del, edit, find_by_id } from './job.remote';
+	import { list, add, del, edit, find_by_id } from './funcs.remote';
 	import AutoTable from '$lib/Components/AutoTable.svelte';
 	import AutoForm from '$lib/Form/AutoForm.svelte';
 
@@ -8,7 +8,6 @@
 		children: Snippet;
 	};
 
-	let id: string | undefined = $state();
 	let { data } = $props();
 </script>
 
@@ -20,7 +19,7 @@
 		oopsy
 	{/snippet}
 	{#each await find_by_id(12) as item}
-		{item.description}
+		{item}
 	{/each}
 </svelte:boundary>
 

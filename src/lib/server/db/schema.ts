@@ -1,21 +1,9 @@
+import { job } from '$routes/job/schema.server';
 import { relations } from 'drizzle-orm';
 import { sqliteTable, integer, text, int, } from 'drizzle-orm/sqlite-core';
-import { createInsertSchema } from 'drizzle-zod';
+export { column } from '$routes/column/schema.server';
+export { job } from '$routes/job/schema.server';
 
-export const column = sqliteTable('column', {
-	id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
-	created: integer('created', { mode: 'timestamp' }).notNull().default(new Date()),
-	column: text('column').notNull(),
-	color: text('color').notNull(),
-	description: text('description').notNull(),
-	order: integer('order'),
-	check: integer('check', { mode: 'boolean' }).default(false)
-});
-
-export const column_schema = createInsertSchema(column, {
-	description: s => s.max(4),
-	order: (s) => s.gt(10, 'too small bro').lt(100, 'too big')
-})
 
 export const user = sqliteTable('user', {
 	id: text().primaryKey(),
@@ -32,15 +20,6 @@ export const customer = sqliteTable('customer', {
 	name: text('name').notNull().unique(),
 });
 
-
-export const job = sqliteTable('job', {
-	id: int({ mode: 'number' }).primaryKey({ autoIncrement: true }),
-	created: integer('created', { mode: 'timestamp' }).notNull().default(new Date()),
-	quantity: integer('quantity').notNull(),
-	description: text('description').notNull(),
-	priority: text({ enum: ['high', 'medium', 'low'] }),
-	status: text({ enum: ['active', 'inactive'] }),
-});
 
 
 export const item = sqliteTable('item', {

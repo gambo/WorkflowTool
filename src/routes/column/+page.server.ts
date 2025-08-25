@@ -1,4 +1,4 @@
-import { schema } from './schema';
+import { schema } from './schema.server';
 import z from 'zod';
 export async function load() {
 

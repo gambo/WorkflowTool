@@ -5,8 +5,7 @@
 	type Props = {
 		children: Snippet;
 	};
-	import { find_by_id } from '../column.remote';
-	import Safe from '$lib/Components/Safe.svelte';
+	import { find_by_id } from '../funcs.remote';
 	let id = $derived(page.params.id);
 </script>
 
@@ -18,8 +17,8 @@
 		oopsy
 	{/snippet}
 	{#if id}
-		{#each await find_by_id(parseInt(id)) as column}
-			<pre>{JSON.stringify(column, null, 2)}</pre>
+		{#each await find_by_id(parseInt(id)) as entry}
+			<pre>{JSON.stringify(entry, null, 2)}</pre>
 		{/each}
 	{/if}
 </svelte:boundary>

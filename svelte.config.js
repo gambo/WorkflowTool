@@ -12,6 +12,9 @@ const config = {
 	},
 	preprocess: vitePreprocess(),
 	kit: {
+		alias: {
+			$routes: 'src/routes'
+		},
 		adapter: adapter(),
 		experimental: {
 			remoteFunctions: true
