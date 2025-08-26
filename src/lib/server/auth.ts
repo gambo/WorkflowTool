@@ -7,7 +7,7 @@ import * as table from '$lib/server/db/schema';
 import { getRequestEvent } from '$app/server';
 
 const DAY_IN_MS = 1000 * 60 * 60 * 24;
-export const LOGIN_ROUTE = "/user/login"
+export const LOGIN_ROUTE = "/user/auth"
 export const sessionCookieName = 'auth-session';
 
 export function generateSessionToken() {
@@ -88,7 +88,7 @@ export function requireLogin() {
 	if (url.pathname === LOGIN_ROUTE) return
 
 	if (!locals.user) {
-		return redirect(302, LOGIN_ROUTE);
+		//return redirect(302, LOGIN_ROUTE);
 	}
 
 	return locals.user;

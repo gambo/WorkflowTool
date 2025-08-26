@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
 	import Field from './Field.svelte';
 	import Input from './Input.svelte';
 	import Select from './Select.svelte';
@@ -19,6 +18,12 @@
 {:else if data.widget === 'color'}
 	{@const label = data.widget?.label ?? titlecase(name)}
 	<Input {label} {name} type="color" {required} />
+{:else if data.widget === 'password'}
+	{@const label = data.widget?.label ?? titlecase(name)}
+	<Input {label} {name} type="password" {required} />
+{:else if data.widget === 'email'}
+	{@const label = data.widget?.label ?? titlecase(name)}
+	<Input {label} {name} type="email" {required} />
 {:else if data.type === 'string' && !data.enum}
 	{@const label = data.widget?.label ?? titlecase(name)}
 	<Input {label} {name} type={data.type} {required} />

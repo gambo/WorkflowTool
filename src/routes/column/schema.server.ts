@@ -5,7 +5,7 @@ import z from "zod";
 export const column = sqliteTable('column', {
     id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
     created: integer('created', { mode: 'timestamp' }).notNull().default(new Date()),
-    column: text('column').notNull(),
+    column: text('user').notNull(),
     color: text('color').notNull(),
     description: text('description').notNull(),
     order: integer('order'),
@@ -21,3 +21,9 @@ export const refinements = {
 } satisfies BuildRefine<typeof column, undefined>
 
 export const schema = createInsertSchema(column, refinements);
+
+export const config = {
+    label: 'Column',
+    table: column,
+    refinements,
+}

@@ -2,22 +2,15 @@ import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, type BuildRefine } from "drizzle-zod";
 // import z from "zod";
 
-export const customer = sqliteTable('customer', {
+
+export const item = sqliteTable('item', {
     id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
     created: integer('created', { mode: 'timestamp' }).notNull().default(new Date()),
-    name: text('name').notNull(),
-    description: text('description'),
+    description: text('description').notNull(),
 });
-
 export const refinements = {
     id: z => z.meta({ widget: 'hidden' }),
     created: z => z.meta({ widget: 'hidden' }),
-} satisfies BuildRefine<typeof customer, undefined>
+} satisfies BuildRefine<typeof item, undefined>
 
-export const schema = createInsertSchema(customer, refinements);
-
-export const config = {
-    label: 'Customer',
-    table: customer,
-    refinements,
-}
+export const schema = createInsertSchema(item, refinements);

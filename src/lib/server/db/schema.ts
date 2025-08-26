@@ -1,29 +1,16 @@
-import { job } from '$routes/job/schema.server';
+import { customer } from '../../../routes/customer/schema.server';
+import { job } from '../../../routes/job/schema.server';
+import { item } from '../../../routes/item/schema.server';
+import { column } from '../../../routes/column/schema.server';
+import { user } from '../../../routes/user/schema.server';
+import { session } from '../../../routes/session/schema.server';
+
 import { relations } from 'drizzle-orm';
 import { sqliteTable, integer, text, int, } from 'drizzle-orm/sqlite-core';
-export { column } from '$routes/column/schema.server';
-export { job } from '$routes/job/schema.server';
-export { customer } from '$routes/customer/schema.server';
+
+export { customer, item, job, column, user, session }
 
 
-export const user = sqliteTable('user', {
-	id: text().primaryKey(),
-	created: integer('created', { mode: 'timestamp' }).notNull().default(new Date()),
-	username: text('username').notNull().unique(),
-	passwordHash: text('password_hash').notNull(),
-	email: text('email').notNull().unique(),
-	status: text({ enum: ['active', 'inactive'] }).notNull().default('active'),
-});
-
-
-
-
-
-export const item = sqliteTable('item', {
-	id: int({ mode: 'number' }).primaryKey({ autoIncrement: true }),
-	created: integer('created', { mode: 'timestamp' }).notNull().default(new Date()),
-	description: text('description').notNull(),
-});
 
 export const jobItems = sqliteTable('job_items', {
 	id: int({ mode: 'number' }).primaryKey({ autoIncrement: true }),
@@ -36,15 +23,6 @@ export const jobItems = sqliteTable('job_items', {
 		onDelete: 'cascade',
 	}),
 })
-
-export const session = sqliteTable('session', {
-	id: int({ mode: 'number' }).primaryKey({ autoIncrement: true }),
-	created: integer('created', { mode: 'timestamp' }).notNull().default(new Date()),
-	userId: text('user_id')
-		.notNull()
-		.references(() => user.id),
-	expiresAt: integer('expires_at', { mode: 'timestamp' }).notNull(),
-});
 
 export const jobRelations = relations(job, ({ many }) => ({
 	jobItems: many(jobItems)
@@ -60,8 +38,3 @@ export const jobItemsRelations = relations(jobItems, ({ one }) => ({
 		references: [item.id],
 	}),
 }));
-
-
-export type Session = typeof session.$inferSelect;
-
-export type User = typeof user.$inferSelect;

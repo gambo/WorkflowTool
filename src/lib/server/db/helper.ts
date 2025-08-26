@@ -3,7 +3,7 @@ import { db } from "$lib/server/db";
 import type { RemoteForm } from "@sveltejs/kit";
 import { eq, getTableColumns, Table } from 'drizzle-orm'
 import { createUpdateSchema, type BuildRefine } from "drizzle-zod";
-import z from 'zod'
+import z, { ZodType } from 'zod'
 import type { $ZodIssue } from 'zod/v4/core';
 
 type AddType = RemoteForm<
@@ -34,7 +34,7 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
         return ret
     })
 
-    const find_by_id = query(z.union([z.int(), z.string()]).optional(), async (id_to_del) => {
+    const find_by_id = query(z.union([z.int(), z.string()]), async (id_to_del) => {
         if (!id_to_del) throw new Error('No ID provided')
         const { id } = getTableColumns(table)
         return await db.select().from(table).where(eq(id, id_to_del))
@@ -79,4 +79,19 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
         }
     })
     return { list, add, del, edit, find_by_id }
+}
+type ToJSONSchemaParams = Parameters<typeof z.toJSONSchema>;
+export const toJSONSchema = <T extends ZodType>(schema: T) => {
+    const params = {
+        unrepresentable: "any",
+        override: (ctx) => {
+            const def = ctx.zodSchema._zod.def;
+            if (def.type === "date") {
+                ctx.jsonSchema.type = "string";
+                ctx.jsonSchema.format = "date-time";
+            }
+        },
+    } satisfies ToJSONSchemaParams[1];
+    const jsonSchema = z.toJSONSchema(schema, params);
+    return jsonSchema;
 }
