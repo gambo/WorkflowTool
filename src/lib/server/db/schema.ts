@@ -6,11 +6,12 @@ import { user } from '../../../routes/content/user/schema.server';
 import { session } from '../../../routes/content/session/schema.server';
 import { jobItems } from '../../../routes/content/jobItems/schema.server';
 import { login } from '../../../routes/content/login/schema.server';
+import { menu } from '../../../routes/content/menu/schema.server';
 
 import { relations } from 'drizzle-orm';
 // import { sqliteTable, integer, text, int, } from 'drizzle-orm/sqlite-core';
 
-export { customer, item, job, column, user, session, jobItems, login }
+export { customer, item, job, column, user, session, jobItems, login, menu }
 
 export const jobRelations = relations(job, ({ many }) => ({
 	jobItems: many(jobItems)

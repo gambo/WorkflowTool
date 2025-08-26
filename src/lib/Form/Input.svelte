@@ -8,32 +8,26 @@
 		type?: string;
 	} & HTMLInputAttributes;
 
+	const inputClass = [
+		'border border-slate-300 bg-slate-50',
+		'px-[1rch] py-[1rex]',
+		'rounded outline-sky-500'
+	];
+
 	let { name, type = 'text', label, ...rest }: Props = $props();
 </script>
 
 {#if type === 'checkbox'}
 	<div class="grid">
 		<label for={name} class="flex items-center gap-2">
-			<input
-				class="border border-slate-300 bg-slate-50 px-[1rch] py-[1rex] outline-sky-500"
-				{name}
-				id={name}
-				{type}
-				{...rest}
-			/>
+			<input class={inputClass} {name} id={name} {type} {...rest} />
 			{label}</label
 		>
 	</div>
 {:else}
 	<div class="grid">
 		<label for={name}>{label}</label>
-		<input
-			class="border border-slate-300 bg-slate-50 px-[1rch] py-[1rex] outline-sky-500"
-			id={name}
-			{name}
-			{type}
-			{...rest}
-		/>
+		<input class={inputClass} id={name} {name} {type} {...rest} />
 	</div>
 {/if}
 

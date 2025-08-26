@@ -10,15 +10,10 @@
 </script>
 
 <App>
-	<MainMenu />
-	<div class="grid grid-cols-[min-content_1fr]">
-		<ul class="text-sm text-slate-700">
-			{#each data.menu as item}
-				<li class="grid">
-					<a class="px-3 py-2 hover:bg-sky-50" href="/content/{item}">{titlecase(item)}</a>
-				</li>
-			{/each}
-		</ul>
+	<div class="grid h-full grid-cols-[10%_auto] text-slate-800">
+		<div>
+			<MainMenu />
+		</div>
 		<div>
 			{@render children()}
 		</div>
