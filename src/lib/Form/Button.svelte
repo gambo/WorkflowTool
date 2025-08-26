@@ -23,3 +23,9 @@
 <button {...rest} class={classes}>
 	{@render children()}
 </button>
+
+<style>
+	button {
+		corner-shape: superellipse(1.7);
+	}
+</style>

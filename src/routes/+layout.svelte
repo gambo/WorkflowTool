@@ -15,7 +15,7 @@
 		<ul class="text-sm text-slate-700">
 			{#each data.menu as item}
 				<li class="grid">
-					<a class="px-3 py-2 hover:bg-sky-50" href="/{item}">{titlecase(item)}</a>
+					<a class="px-3 py-2 hover:bg-sky-50" href="/content/{item}">{titlecase(item)}</a>
 				</li>
 			{/each}
 		</ul>

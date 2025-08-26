@@ -5,7 +5,7 @@
 
 	type Props = {
 		form: RemoteForm<
-			{ status: 'success'; message: string } | { status: 'fail'; error: $ZodIssue[] }
+			{ status: 'success'; message: string } | { status: 'fail'; error: $ZodIssue[] | string }
 		>;
 	};
 

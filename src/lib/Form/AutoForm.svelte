@@ -8,7 +8,7 @@
 	import Field from './Field.svelte';
 
 	type AddType = RemoteForm<
-		{ status: 'success'; message: string } | { status: 'fail'; error: $ZodIssue[] }
+		{ status: 'success'; message: string } | { status: 'fail'; error: $ZodIssue[] | string }
 	>;
 	type Props = {
 		schema: ReturnType<typeof z.toJSONSchema>['schemas']['string'];
