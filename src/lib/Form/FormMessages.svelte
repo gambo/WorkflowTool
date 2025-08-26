@@ -22,15 +22,21 @@
 			<div class="rounded bg-green-200 px-4 py-2 text-green-900">
 				{form.result.message}
 			</div>
-		{:else}
-			<div
-				class="grid grid-cols-[min-content_1fr] gap-x-2 rounded bg-amber-200 px-4 py-2 text-amber-900"
-			>
-				{#each form.result.error as error}
-					<span class="font-bold first-letter:uppercase">{error.path}</span>
-					<span>{error.message}</span>
-				{/each}
-			</div>
+		{:else if form.result.status === 'fail'}
+			{#if typeof form.result.error === 'string'}
+				<div class="grid gap-x-2 rounded bg-amber-200 px-4 py-2 text-amber-900">
+					{form.result.error}
+				</div>
+			{:else}
+				<div
+					class="grid grid-cols-[min-content_1fr] gap-x-2 rounded bg-amber-200 px-4 py-2 text-amber-900"
+				>
+					{#each form.result.error as error}
+						<span class="font-bold first-letter:uppercase">{error.path}</span>
+						<span>{error.message}</span>
+					{/each}
+				</div>
+			{/if}
 		{/if}
 	{/if}
 </div>

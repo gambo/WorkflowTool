@@ -8,7 +8,7 @@ import type { $ZodIssue } from 'zod/v4/core';
 
 type AddType = RemoteForm<
     | { status: 'success'; message: string }
-    | { status: 'fail'; error: $ZodIssue[] }
+    | { status: 'fail'; error: $ZodIssue[] | string }
 >
 type EditType = RemoteForm<
     | { status: 'success'; message: string }
@@ -42,10 +42,18 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
 
     const add: AddType = form(async (data) => {
         const invalid = Object.fromEntries(data.entries())
-        const values = insertSchema.safeParse(invalid)
+        const values = await insertSchema.safeParseAsync(invalid)
         if (values.success) {
-            await db.insert(table).values(values.data)
-            await list().refresh()
+            try {
+                await db.insert(table).values(values.data)
+                await list().refresh()
+            } catch (e) {
+                let err = 'Unknown error'
+                if (e instanceof Error) {
+                    err = e.message
+                }
+                return { status: 'fail', error: err }
+            }
             return { status: 'success', message: `Successfully added new ${label}` }
         } else {
             return { status: 'fail', error: values.error.issues }
@@ -56,12 +64,20 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
     const edit: EditType = form(async (data) => {
         const invalid = Object.fromEntries(data.entries())
         const id_to_edit = invalid['id']
-        const values = editSchema.safeParse(invalid)
+        const values = await editSchema.safeParseAsync(invalid)
         if (values.success) {
-            const { id } = getTableColumns(table)
-            await db.update(table).set(values.data).where(eq(id, id_to_edit))
-            await list().refresh()
-            return { status: 'success', message: `Successfully edited new column` }
+            try {
+                const { id } = getTableColumns(table)
+                await db.update(table).set(values.data).where(eq(id, id_to_edit))
+                await list().refresh()
+                return { status: 'success', message: `Successfully edited new column` }
+            } catch (e) {
+                let err = 'Unknown error'
+                if (e instanceof Error) {
+                    err = e.message
+                }
+                return { status: 'fail', error: err }
+            }
         } else {
             return { status: 'fail', error: values.error.issues }
         }
