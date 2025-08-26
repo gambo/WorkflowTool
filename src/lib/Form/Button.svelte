@@ -26,6 +26,7 @@
 
 <style>
 	button {
+		border-radius: 30% / 50%;
 		corner-shape: superellipse(1.7);
 	}
 </style>

@@ -28,7 +28,8 @@
 		{list}
 		{del}
 		config={{
-			created: 'date'
+			created: 'date',
+			check: 'boolean'
 		}}
 	/>
 	<AutoForm schema={data.form} {add} />
