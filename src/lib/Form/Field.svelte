@@ -16,6 +16,9 @@
 
 {#if data.widget === 'hidden'}
 	<!-- Purposefully blank -->
+{:else if data.format === 'date-time'}
+	{@const label = data.widget?.label ?? titlecase(name)}
+	<Input {label} {name} type="date" {required} />
 {:else if data.widget === 'color'}
 	{@const label = data.widget?.label ?? titlecase(name)}
 	<Input {label} {name} type="color" {required} />
