@@ -41,7 +41,7 @@
 			</thead>
 			<tbody>
 				{#each await list() as item}
-					<tr class="odd:bg-neutral-50">
+					<tr class="odd:bg-neutral-50 hover:bg-sky-50">
 						{#each Object.entries(item) as [k, i]}
 							{@const format = config && config[k] ? format_funcs[config[k]] : id}
 							<td class={td_classes} title={i}>{format(i)}</td>
