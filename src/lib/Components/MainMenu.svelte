@@ -6,11 +6,11 @@
 </script>
 
 <div class="grid p-4 text-sm font-medium">
-	<a href="/" title="Home" class="flex items-center gap-1">
+	<a href="/" title="Home" class="flex items-center gap-1 px-4">
 		<Logo />
 		Workflow
 	</a>
-	<div class="grid gap-1 pt-4 text-slate-700">
+	<div class="grid gap-1 pt-8 text-slate-700">
 		<svelte:boundary>
 			{#snippet pending()}
 				getting menu...
