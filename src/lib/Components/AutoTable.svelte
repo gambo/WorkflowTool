@@ -9,7 +9,7 @@
 	};
 
 	let { list, del, config }: Props = $props();
-	const td_classes = 'border border-slate-200 px-2 py-1 text-sm truncate';
+	const td_classes = 'px-4 py-3 max-w-80 truncate';
 	const id = (x: any) => x;
 	const format_funcs = {
 		date: (d: string) => new Date(d).toLocaleDateString(),
@@ -26,9 +26,9 @@
 		{#snippet failed()}
 			An error occured.
 		{/snippet}
-		<table>
+		<table class="w-full">
 			<thead>
-				<tr class="odd:bg-neutral-50">
+				<tr class="border-b border-slate-300">
 					{#each await list() as h, i}
 						{#if i === 0}
 							{#each Object.keys(h) as title}
@@ -44,7 +44,7 @@
 					<tr class="odd:bg-neutral-50">
 						{#each Object.entries(item) as [k, i]}
 							{@const format = config && config[k] ? format_funcs[config[k]] : id}
-							<td class={td_classes}>{format(i)}</td>
+							<td class={td_classes} title={i}>{format(i)}</td>
 						{/each}
 						<td class={td_classes}>
 							<button name="id" value={item.id} {...del.buttonProps}>{@render trash_icon()}</button>

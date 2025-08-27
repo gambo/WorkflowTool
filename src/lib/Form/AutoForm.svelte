@@ -21,7 +21,16 @@
 </script>
 
 <FormMessages form={add} />
-<form {...add}>
+<form
+	{...add.enhance(async ({ form, submit }) => {
+		try {
+			await submit();
+			if (add.result?.status === 'success') {
+				form.reset();
+			}
+		} catch {}
+	})}
+>
 	{#if schema.properties}
 		{@const requireds = schema.required ?? []}
 		{#each Object.entries(schema.properties) as [name, data]}
