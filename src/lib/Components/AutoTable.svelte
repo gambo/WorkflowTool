@@ -47,7 +47,12 @@
 							<td class={td_classes} title={i}>{format(i)}</td>
 						{/each}
 						<td class={td_classes}>
-							<button name="id" value={item.id} {...del.buttonProps}>{@render trash_icon()}</button>
+							<button
+								name="id"
+								class="cursor-pointer rounded-full p-2 hover:bg-red-700 hover:text-white"
+								value={item.id}
+								{...del.buttonProps}>{@render trash_icon()}</button
+							>
 						</td>
 					</tr>
 				{:else}
