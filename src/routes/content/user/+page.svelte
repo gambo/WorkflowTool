@@ -11,18 +11,6 @@
 	let { data } = $props();
 </script>
 
-<svelte:boundary>
-	{#snippet pending()}
-		loading
-	{/snippet}
-	{#snippet failed()}
-		oopsy
-	{/snippet}
-	{#each await find_by_id(12) as item}
-		{item.username}
-	{/each}
-</svelte:boundary>
-
 <AutoTable
 	{list}
 	{del}

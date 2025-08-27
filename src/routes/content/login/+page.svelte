@@ -11,6 +11,4 @@
 	let { data } = $props();
 </script>
 
-<div class="m-8 w-90">
-	<AutoForm schema={data.form} add={authenticate} />
-</div>
+<AutoForm schema={data.form} add={authenticate} />

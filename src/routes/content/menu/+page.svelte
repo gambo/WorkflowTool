@@ -11,13 +11,11 @@
 	let { data } = $props();
 </script>
 
-<div class="m-8 w-90">
-	<AutoTable
-		{list}
-		{del}
-		config={{
-			created: 'date'
-		}}
-	/>
-	<AutoForm schema={data.form} {add} />
-</div>
+<AutoTable
+	{list}
+	{del}
+	config={{
+		created: 'date'
+	}}
+/>
+<AutoForm schema={data.form} {add} />

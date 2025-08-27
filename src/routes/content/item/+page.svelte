@@ -11,32 +11,11 @@
 	let { data } = $props();
 </script>
 
-<svelte:boundary>
-	{#snippet pending()}
-		loading
-	{/snippet}
-	{#snippet failed()}
-		oopsy
-	{/snippet}
-	{#each await find_by_id(12) as item}
-		{item}
-	{/each}
-</svelte:boundary>
-
-<div class="m-8 w-90">
-	<AutoTable
-		{list}
-		{del}
-		config={{
-			created: 'date'
-		}}
-	/>
-	<AutoForm
-		schema={data.form}
-		{add}
-		data={{
-			created: new Date(),
-			description: 'A new item1'
-		}}
-	/>
-</div>
+<AutoTable
+	{list}
+	{del}
+	config={{
+		created: 'date'
+	}}
+/>
+<AutoForm schema={data.form} {add} />
