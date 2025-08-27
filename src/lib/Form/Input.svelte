@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
+	import { getContext, type Snippet } from 'svelte';
 	import type { HTMLInputAttributes } from 'svelte/elements';
 
 	type Props = {
@@ -15,19 +15,21 @@
 	];
 
 	let { name, type = 'text', label, ...rest }: Props = $props();
+	let ok: Record<string, any> = getContext('formData');
+	let defaultValue = $derived(ok[name]);
 </script>
 
 {#if type === 'checkbox'}
 	<div class="grid">
 		<label for={name} class="flex items-center gap-2">
-			<input class={inputClass} {name} id={name} {type} {...rest} />
+			<input class={inputClass} {name} id={name} {type} {...rest} defaultChecked={defaultValue} />
 			{label}</label
 		>
 	</div>
 {:else}
 	<div class="grid">
 		<label for={name}>{label}</label>
-		<input class={inputClass} id={name} {name} {type} {...rest} />
+		<input class={inputClass} id={name} {name} {type} {...rest} {defaultValue} />
 	</div>
 {/if}
 

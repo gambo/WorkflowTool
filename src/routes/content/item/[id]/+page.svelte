@@ -3,9 +3,13 @@
 	import type { Snippet } from 'svelte';
 
 	type Props = {
+		data: PageServerData;
 		children: Snippet;
 	};
-	import { find_by_id } from '../funcs.remote';
+	let { data }: Props = $props();
+	import { add, edit, find_by_id } from '../funcs.remote';
+	import AutoForm from '$lib/Form/AutoForm.svelte';
+	import type { PageServerData } from '../$types';
 	let id = $derived(page.params.id);
 </script>
 
@@ -18,7 +22,7 @@
 	{/snippet}
 	{#if id}
 		{#each await find_by_id(parseInt(id)) as entry}
-			<pre>{JSON.stringify(entry, null, 2)}</pre>
+			<AutoForm schema={data.form} data={entry} add={edit} />
 		{/each}
 	{/if}
 </svelte:boundary>

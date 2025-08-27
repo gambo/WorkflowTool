@@ -31,5 +31,12 @@
 			created: 'date'
 		}}
 	/>
-	<AutoForm schema={data.form} {add} />
+	<AutoForm
+		schema={data.form}
+		{add}
+		data={{
+			created: new Date(),
+			description: 'A new item1'
+		}}
+	/>
 </div>

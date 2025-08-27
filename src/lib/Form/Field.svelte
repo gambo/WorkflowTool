@@ -8,6 +8,7 @@
 		name: string;
 		data: any;
 		required: boolean;
+		defaultValue?: any;
 	};
 
 	let { name, data, required }: Props = $props();

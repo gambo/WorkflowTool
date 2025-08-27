@@ -1,6 +1,6 @@
 <script lang="ts" generics="T extends Array<Record<string, any>> = Record<string, any>[]">
 	import type { RemoteForm } from '@sveltejs/kit';
-	import type { Snippet } from 'svelte';
+	import { setContext, type Snippet } from 'svelte';
 	import FormMessages from './FormMessages.svelte';
 	import type { $ZodIssue } from 'zod/v4/core';
 	import Button from './Button.svelte';
@@ -12,10 +12,12 @@
 	>;
 	type Props = {
 		schema: ReturnType<typeof z.toJSONSchema>['schemas']['string'];
+		data?: Record<string, any>;
 		add: AddType;
 	};
 
-	let { schema, add }: Props = $props();
+	let { schema, add, data }: Props = $props();
+	setContext('formData', data ?? {});
 </script>
 
 <FormMessages form={add} />
