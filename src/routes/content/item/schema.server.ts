@@ -6,7 +6,7 @@ import { createInsertSchema, type BuildRefine } from "drizzle-zod";
 export const item = sqliteTable('item', {
     id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
     created: integer('created', { mode: 'timestamp' }).notNull().default(new Date()),
-    description: text('description').notNull(),
+    description: text('description').notNull().unique(),
 });
 export const refinements = {
     id: z => z.meta({ widget: 'hidden' }),

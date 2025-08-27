@@ -11,6 +11,11 @@ const dirname =
 
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
+	build: {
+		rollupOptions: {
+			external: ['@node-rs/argon2-wasm32-wasi']
+		}
+	},
 	plugins: [tailwindcss(), sveltekit(), devtoolsJson()],
 	test: {
 		projects: [
