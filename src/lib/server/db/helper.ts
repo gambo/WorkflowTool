@@ -1,7 +1,7 @@
 import { form, query } from "$app/server";
 import { db } from "$lib/server/db";
 import type { RemoteForm } from "@sveltejs/kit";
-import { eq, getTableColumns, Table } from 'drizzle-orm'
+import { asc, desc, eq, getTableColumns, Table } from 'drizzle-orm'
 import { createUpdateSchema, type BuildRefine } from "drizzle-zod";
 import z, { ZodType } from 'zod'
 import type { $ZodIssue } from 'zod/v4/core';
@@ -32,6 +32,15 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
     const list = query(async () => {
         const ret = await db.select().from(table as T)
         return ret
+    })
+
+    const list_asc_by = query(z.string(), async (str: string) => {
+        const cols = getTableColumns(table)[str]
+        return await db.select().from(table).orderBy(asc(cols))
+    })
+    const list_desc_by = query(z.string(), async (str: string) => {
+        const cols = getTableColumns(table)[str]
+        return await db.select().from(table).orderBy(desc(cols))
     })
 
     const find_by_id = query(z.union([z.int(), z.string()]), async (id_to_del) => {
@@ -94,7 +103,7 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
             return { status: 'fail', message: 'Could not delete' }
         }
     })
-    return { list, add, del, edit, find_by_id }
+    return { list, add, del, edit, find_by_id, list_asc_by, list_desc_by }
 }
 type ToJSONSchemaParams = Parameters<typeof z.toJSONSchema>;
 export const toJSONSchema = <T extends ZodType>(schema: T) => {
