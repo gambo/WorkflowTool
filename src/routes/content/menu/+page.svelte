@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import { list, add, del, edit, find_by_id } from './funcs.remote';
+	import { list, add, del, edit, find_by_id, list_asc_by, list_desc_by } from './funcs.remote';
 	import AutoTable from '$lib/Components/AutoTable.svelte';
 	import AutoForm from '$lib/Form/AutoForm.svelte';
 
@@ -13,6 +13,8 @@
 
 <AutoTable
 	{list}
+	{list_asc_by}
+	{list_desc_by}
 	{del}
 	config={{
 		created: 'date'

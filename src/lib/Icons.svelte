@@ -1,5 +1,5 @@
 <script module>
-	export { workflow_icon, trash_icon, spinner_icon, edit_icon, add_icon, priority_up };
+	export { workflow_icon, trash_icon, spinner_icon, edit_icon, add_icon, priority_up, chevron };
 </script>
 
 {#snippet priority_up()}
@@ -106,5 +106,20 @@
 		/><path
 			d="M21.378 12.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"
 		/><path d="M8 18h1" /></svg
+	>
+{/snippet}
+
+{#snippet chevron()}
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		width="16"
+		height="16"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6" /></svg
 	>
 {/snippet}
