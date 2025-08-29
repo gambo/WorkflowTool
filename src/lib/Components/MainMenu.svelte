@@ -1,7 +1,7 @@
 <script>
 	import Logo from './Logo.svelte';
 	import Pipe from './Pipe.svelte';
-	import { list as menu } from '$routes/content/menu/funcs.remote';
+	import { list_asc_by as menu } from '$routes/content/menu/funcs.remote';
 	import { page } from '$app/state';
 </script>
 
@@ -18,7 +18,7 @@
 			{#snippet failed()}
 				error loading menu
 			{/snippet}
-			{#each await menu() as item (item.id)}
+			{#each await menu('order') as item (item.id)}
 				{@const active = [page.url.pathname === item.path && 'bg-violet-100']}
 				<a href={item.path} class="rounded px-4 py-1.5 transition hover:bg-sky-50 {active}"
 					>{item.label}</a
