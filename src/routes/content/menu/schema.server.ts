@@ -27,7 +27,7 @@ export const refinements = {
     id: z => z.meta({ widget: 'hidden' }),
     created: z => z.meta({ widget: 'hidden' }),
     menugroup: z => z.meta({ widget: 'lookup', table: 'menugroup', key: 'id', label: 'label' } satisfies LookupReference),
-    order: z.coerce.number().min(0, 'Order must gt 0').meta({ widget: 'number' }),
+    order: z.coerce.number().min(0, 'Order must positive').meta({ widget: 'number' }),
 } satisfies BuildRefine<typeof menu, undefined>
 
 
