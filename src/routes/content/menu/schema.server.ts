@@ -1,6 +1,7 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, type BuildRefine } from "drizzle-zod";
 import { menugroup } from "../menugroup/schema.server";
+import z from "zod";
 // import z from "zod";
 
 export const menu = sqliteTable('menu', {
@@ -11,6 +12,7 @@ export const menu = sqliteTable('menu', {
         onDelete: 'cascade',
     }).notNull(),
     path: text('path').notNull(),
+    order: integer('order').notNull(),
 });
 
 
@@ -24,8 +26,11 @@ type LookupReference = {
 export const refinements = {
     id: z => z.meta({ widget: 'hidden' }),
     created: z => z.meta({ widget: 'hidden' }),
-    menugroup: z => z.meta({ widget: 'lookup', table: 'menugroup', key: 'id', label: 'label' } satisfies LookupReference)
+    menugroup: z => z.meta({ widget: 'lookup', table: 'menugroup', key: 'id', label: 'label' } satisfies LookupReference),
+    order: z.coerce.number().min(0, 'Order must gt 0').meta({ widget: 'number' }),
 } satisfies BuildRefine<typeof menu, undefined>
+
+
 
 export const schema = createInsertSchema(menu, refinements);
 
