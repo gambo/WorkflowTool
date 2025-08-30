@@ -5,7 +5,7 @@
 	type Props = {
 		children: Snippet;
 		variant?: 'primary' | 'secondary' | 'danger';
-		class: ClassValue;
+		class?: ClassValue;
 	} & HTMLButtonAttributes;
 
 	let { variant = 'primary', children, ...rest }: Props = $props();

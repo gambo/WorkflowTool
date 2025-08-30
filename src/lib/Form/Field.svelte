@@ -3,6 +3,7 @@
 	import Input from './Input.svelte';
 	import Select from './Select.svelte';
 	import { titlecase } from '$lib';
+	import { findAllByAltText } from 'storybook/internal/test';
 
 	type Props = {
 		name: string;
@@ -28,6 +29,25 @@
 {:else if data.widget === 'email'}
 	{@const label = data.widget?.label ?? titlecase(name)}
 	<Input {label} {name} type="email" {required} />
+{:else if data.widget === 'lookup'}
+	<svelte:boundary>
+		{#snippet pending()}
+			loading references
+		{/snippet}
+		{#snippet failed(e)}
+			an error getting references
+		{/snippet}
+		{@const title = data.widget?.label ?? titlecase(name)}
+		{@const { key, label } = data}
+		{@const list = await import(`../../routes/content/${data.table}/funcs.remote.ts`).then(x => x.list)}
+		{@const entries = await list()}
+		<Select label={title} {name} {required}>
+			<option>Select an option</option>
+			{#each entries as option}
+				<option value={option[key]}>{option[label]}</option>
+			{/each}
+		</Select>
+	</svelte:boundary>
 {:else if data.type === 'string' && !data.enum}
 	{@const label = data.widget?.label ?? titlecase(name)}
 	<Input {label} {name} type={data.type} {required} />

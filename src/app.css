@@ -10,40 +10,6 @@
 	@view-transition {
 		navigation: auto;
 	}
-
-	details {
-		--timing: 250ms;
-		inline-size: 50ch;
-
-		@media (prefers-reduced-motion: no-preference) {
-			interpolate-size: allow-keywords;
-		}
-
-		&::details-content {
-			opacity: 0;
-			block-size: 0;
-			overflow-y: clip;
-			transition:
-				content-visibility var(--timing) allow-discrete,
-				opacity var(--timing),
-				block-size var(--timing);
-			transition-timing-function: var(--ease-nice);
-		}
-
-		&[open]::details-content {
-			opacity: 1;
-			block-size: auto;
-		}
-	}
-	select {
-		appearance: none;
-		@supports (appearance: base-select) {
-			&,
-			&::picker(select) {
-				appearance: base-select;
-			}
-		}
-	}
 }
 
 @layer utilities {
