@@ -17,12 +17,12 @@ export const refinements = {
 
 export const schema = createInsertSchema(login, refinements);
 
-// export const config = {
-//     code: 'login',
-//     label: 'Login',
-//     table: login,
-//     refinements,
-// }
+export const config = {
+    code: 'login',
+    label: 'Login',
+    table: login,
+    refinements,
+}
 
 // const hash_config = {
 //     // recommended minimum parameters
