@@ -10,6 +10,9 @@ const config = {
 			async: true
 		}
 	},
+	vitePlugin: {
+		disableDependencyReinclusion: ['@node-rs']
+	},
 	preprocess: vitePreprocess(),
 	kit: {
 		alias: {
