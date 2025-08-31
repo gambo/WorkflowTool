@@ -2,13 +2,12 @@ import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, type BuildRefine } from "drizzle-zod";
 import { menugroup } from "../menugroup/schema.server";
 import z from "zod";
-// import z from "zod";
 
 export const menu = sqliteTable('menu', {
     id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
     created: integer('created', { mode: 'timestamp' }).notNull().default(new Date()),
     label: text('label').notNull(),
-    menugroup: text('menugroup').references(() => menugroup.id, {
+    menugroup: integer('menugroup').references(() => menugroup.id, {
         onDelete: 'cascade',
     }).notNull(),
     path: text('path').notNull(),
@@ -26,7 +25,7 @@ type LookupReference = {
 export const refinements = {
     id: z => z.meta({ widget: 'hidden' }),
     created: z => z.meta({ widget: 'hidden' }),
-    menugroup: z => z.meta({ widget: 'lookup', table: 'menugroup', key: 'id', label: 'label' } satisfies LookupReference),
+    menugroup: z.coerce.number().meta({ widget: 'lookup', table: 'menugroup', key: 'id', label: 'label' } satisfies LookupReference),
     order: z.coerce.number().min(0, 'Order must positive').meta({ widget: 'number' }),
 } satisfies BuildRefine<typeof menu, undefined>
 
