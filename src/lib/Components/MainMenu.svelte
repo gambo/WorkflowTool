@@ -1,7 +1,7 @@
 <script>
 	import Logo from './Logo.svelte';
-	import { list_asc_by as menu } from '$routes/content/menu/funcs.remote';
-	import { list as sections } from '$routes/content/menugroup/funcs.remote';
+	import { list_asc_by as menu } from '$lib/db/menu/funcs.remote';
+	import { list as sections } from '$lib/db/menugroup/funcs.remote';
 	import { page } from '$app/state';
 	import Details from './Details.svelte';
 </script>

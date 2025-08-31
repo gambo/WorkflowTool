@@ -1,5 +1,5 @@
-import { requireLogin } from "$lib/server/auth";
-import * as schema from '$lib/server/db/schema'
+import { requireLogin } from "$lib/db/auth";
+import * as schema from '$lib/db/schema'
 
 export async function load() {
     const user = requireLogin()
