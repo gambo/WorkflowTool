@@ -35,11 +35,12 @@
 			loading references
 		{/snippet}
 		{#snippet failed(e)}
-			an error getting references
+			{#if e instanceof Error}{e.message}
+			{:else}unknown error{/if}
 		{/snippet}
 		{@const title = data.widget?.label ?? titlecase(name)}
 		{@const { key, label } = data}
-		{@const list = await import(`../../routes/content/${data.table}/funcs.remote.ts`).then(x => x.list)}
+		{@const list = await import(`../../lib/db/${data.table}/funcs.remote.ts`).then(x => x.list)}
 		{@const entries = await list()}
 		<Select label={title} {name} {required}>
 			<option>Select an option</option>

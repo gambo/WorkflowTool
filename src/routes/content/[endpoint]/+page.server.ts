@@ -1,10 +1,10 @@
-import { toJSONSchema } from '$lib/server/db/helper.js';
-import { validEndpoints } from './validEndpoints.js';
+import { toJSONSchema } from '$lib/db/helper.js';
+import { enabled_endpoints } from '$lib/db/enabled_endpoints.js';
 import type { ZodType } from 'zod';
 
 export async function load({ params }) {
     const { endpoint } = params;
-    if (!validEndpoints.includes(endpoint)) {
+    if (!enabled_endpoints.includes(endpoint)) {
         throw new Error('Invalid endpoint');
     }
     type Schema<T extends ZodType = ZodType> = T;

@@ -19,7 +19,7 @@
 		boolean: (b: boolean) => (b ? 'Yes' : 'No'),
 		number: (n: number) => n.toString()
 	};
-	let dlist = $state(list);
+	let dlist = $derived(list);
 	let sorters: Record<string, 'asc' | 'desc' | undefined> = $state({});
 	const sort = (by: string) => {
 		if (!sorters[by]) {

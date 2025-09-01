@@ -10,6 +10,7 @@
 	let { data } = $props();
 </script>
 
+{data.endpoint}
 <AutoTable
 	list={data.list}
 	list_asc_by={data.list_asc_by}
