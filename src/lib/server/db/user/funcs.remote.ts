@@ -1,4 +1,4 @@
-import { crud } from "$lib/db/helper";
+import { crud } from "$lib/server/db/helper";
 import { config } from "./schema.server";
 // import z from "zod";
 

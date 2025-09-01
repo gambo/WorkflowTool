@@ -1,4 +1,4 @@
-import { toJSONSchema } from '$lib/db/helper.js';
+import { toJSONSchema } from '$lib/server/db/helper.js';
 import { validEndpoints } from './validEndpoints.js';
 import type { ZodType } from 'zod';
 

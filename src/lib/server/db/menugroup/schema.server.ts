@@ -5,7 +5,7 @@ import { createInsertSchema, type BuildRefine } from "drizzle-zod";
 export const menugroup = sqliteTable('menugroup', {
     id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
     created: integer('created', { mode: 'timestamp' }).notNull().default(new Date()),
-    label: text('label').notNull(),
+    label: text('label').unique().notNull(),
 });
 
 export const refinements = {

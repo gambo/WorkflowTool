@@ -1,5 +1,5 @@
 import { form, query } from "$app/server";
-import { db } from "$lib/db";
+import { db } from "$lib/server/db";
 import type { RemoteForm } from "@sveltejs/kit";
 import { asc, desc, eq, getTableColumns, Table } from 'drizzle-orm'
 import { createUpdateSchema, type BuildRefine } from "drizzle-zod";
