@@ -23,6 +23,7 @@ export const schema = createInsertSchema(jobItems, refinements);
 
 export const config = {
     label: 'Job Item',
+    description: 'Items of the jobs',
     table: jobItems,
     refinements,
 }

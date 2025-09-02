@@ -35,6 +35,7 @@ export const schema = createInsertSchema(menu, refinements);
 
 export const config = {
     label: 'Menu',
+    description: 'Manage Menu',
     table: menu,
     refinements,
 }

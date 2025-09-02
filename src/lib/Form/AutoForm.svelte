@@ -6,6 +6,7 @@
 	import Button from './Button.svelte';
 	import type z from 'zod';
 	import Field from './Field.svelte';
+	import Details from '$lib/Components/Details.svelte';
 
 	type AddType = RemoteForm<
 		{ status: 'success'; message: string } | { status: 'fail'; error: $ZodIssue[] | string }
@@ -40,7 +41,9 @@
 
 	<Button class="mt-8">save</Button>
 </form>
-<details class="mt-2">
-	<summary>debug</summary>
-	<pre>{JSON.stringify(schema, null, 2)}</pre>
-</details>
+
+<div class="mt-8">
+	<Details summary="Debug">
+		<pre>{JSON.stringify(schema, null, 2)}</pre>
+	</Details>
+</div>

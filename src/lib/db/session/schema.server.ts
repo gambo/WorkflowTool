@@ -21,6 +21,7 @@ export const schema = createInsertSchema(session, refinements);
 
 export const config = {
     label: 'Session',
+    description: 'Manage Session',
     table: session,
     refinements,
 }

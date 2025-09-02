@@ -11,7 +11,7 @@
 
 <div>
 	<details {...rest}>
-		<summary class="flex list-none items-center gap-1 text-[13px] text-slate-500">
+		<summary class="flex list-none items-center gap-1 text-sm text-slate-500">
 			<span>{summary}</span>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

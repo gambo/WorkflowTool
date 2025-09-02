@@ -12,7 +12,7 @@
 	};
 
 	let { list, list_asc_by, list_desc_by, del, config }: Props = $props();
-	const td_classes = 'px-4 py-3 max-w-80 truncate';
+	const td_classes = 'px-2 py-1 max-w-80 truncate';
 	const id = (x: any) => x;
 	const format_funcs = {
 		date: (d: string) => new Date(d).toLocaleDateString(),

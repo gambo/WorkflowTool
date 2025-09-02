@@ -18,8 +18,8 @@ export const refinements = {
 export const schema = createInsertSchema(login, refinements);
 
 export const config = {
-    code: 'login',
     label: 'Login',
+    description: 'Manage logins',
     table: login,
     refinements,
 }

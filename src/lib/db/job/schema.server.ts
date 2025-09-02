@@ -18,3 +18,8 @@ export const refinements = {
 } satisfies BuildRefine<typeof job, undefined>
 
 export const schema = createInsertSchema(job, refinements);
+
+export const config = {
+    label: 'Jobs',
+    description: 'Jobs to do the thing in the place',
+}

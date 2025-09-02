@@ -4,6 +4,7 @@
 	--font-mono: 'Victor Mono Variable', monospace;
 	--font-sans: 'Inter Tight Variable';
 	--ease-nice: cubic-bezier(0.715, -0.185, 0.165, 1.215);
+	--spacing: 4px;
 }
 
 @layer base {
@@ -36,4 +37,5 @@
 html {
 	/* color-scheme: light dark; */
 	font-family: var(--font-sans);
+	font-size: 13px;
 }

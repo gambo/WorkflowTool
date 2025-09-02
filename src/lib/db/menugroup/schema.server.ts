@@ -17,6 +17,7 @@ export const schema = createInsertSchema(menugroup, refinements);
 
 export const config = {
     label: 'Menu Group',
+    description: 'Manage Menu Group',
     table: menugroup,
     refinements,
 }

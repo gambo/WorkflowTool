@@ -1,4 +1,4 @@
-import { requireLogin } from "$lib/db/auth";
+// import { requireLogin } from "$lib/db/auth";
 import * as schema from '$lib/db/schema'
 
 export async function load() {

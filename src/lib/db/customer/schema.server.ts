@@ -18,6 +18,7 @@ export const schema = createInsertSchema(customer, refinements);
 
 export const config = {
     label: 'Customer',
+    description: 'Manage Customers',
     table: customer,
     refinements,
 }

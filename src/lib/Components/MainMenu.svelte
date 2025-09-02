@@ -6,8 +6,8 @@
 	import Details from './Details.svelte';
 </script>
 
-<div class="grid p-4 text-sm font-medium">
-	<a href="/" title="Home" class="flex items-center gap-1 px-4">
+<div class="grid p-4">
+	<a href="/" title="Home" class="flex items-center gap-1">
 		<Logo />
 		Workflow
 	</a>
@@ -24,8 +24,8 @@
 					<div class="grid">
 						{#each await menu('order') as item (item.id)}
 							{#if item.menugroup === section.id}
-								{@const active = [page.url.pathname === item.path && 'bg-violet-100']}
-								<a href={item.path} class="rounded px-4 py-1.5 transition hover:bg-sky-50 {active}"
+								{@const active = [page.url.pathname === item.path && 'bg-violet-200']}
+								<a href={item.path} class="rounded px-4 py-1 transition hover:bg-sky-200 {active}"
 									>{item.label}</a
 								>
 							{/if}

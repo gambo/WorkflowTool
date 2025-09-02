@@ -14,3 +14,8 @@ export const refinements = {
 } satisfies BuildRefine<typeof item, undefined>
 
 export const schema = createInsertSchema(item, refinements);
+
+export const config = {
+    label: 'Items',
+    description: 'Items to do the thing in the place',
+}

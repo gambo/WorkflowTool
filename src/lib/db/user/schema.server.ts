@@ -23,8 +23,8 @@ export const refinements = {
 export const schema = createInsertSchema(user, refinements);
 
 export const config = {
-    code: 'user',
     label: 'User',
+    description: 'Manage users',
     table: user,
     refinements,
 }

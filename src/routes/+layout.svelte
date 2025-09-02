@@ -14,7 +14,7 @@
 		<div>
 			<MainMenu />
 		</div>
-		<div>
+		<div class="rounded border border-slate-200 bg-white p-4 shadow-xs">
 			{@render children()}
 		</div>
 	</div>
