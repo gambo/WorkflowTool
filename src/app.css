@@ -32,6 +32,10 @@
 		);
 		background-size: var(--space, 4px) var(--space, 4px);
 	}
+	.squircle {
+		border-radius: 30% / 50%;
+		corner-shape: superellipse(1.7);
+	}
 }
 
 html {
