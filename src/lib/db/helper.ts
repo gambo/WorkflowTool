@@ -1,10 +1,11 @@
-import { form, query } from "$app/server";
+import { form, getRequestEvent, query } from "$app/server";
 import { db } from "$lib/db";
 import type { RemoteForm } from "@sveltejs/kit";
-import { asc, desc, eq, getTableColumns, Table } from 'drizzle-orm'
+import { asc, desc, eq, getTableColumns, getTableName, Table } from 'drizzle-orm'
 import { createUpdateSchema, type BuildRefine } from "drizzle-zod";
 import z, { ZodType } from 'zod'
 import type { $ZodIssue } from 'zod/v4/core';
+import { audit } from "./schema";
 
 type AddType = RemoteForm<
     | { status: 'success'; message: string }
@@ -31,6 +32,11 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
     const editSchema = createUpdateSchema(table, refinements);
     const list = query(async () => {
         const ret = await db.select().from(table as T)
+        const { locals } = await getRequestEvent()
+        await db.insert(audit).values({
+            message: 'user did list stuff',
+            payload: locals
+        })
         return ret
     })
 
@@ -61,8 +67,16 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
                 if (e instanceof Error) {
                     err = e.message
                 }
+                await db.insert(audit).values({
+                    message: 'user added something and it failed',
+                    payload: err
+                })
                 return { status: 'fail', error: err }
             }
+            await db.insert(audit).values({
+                message: 'user added stuff',
+                payload: values.data
+            })
             return { status: 'success', message: `Successfully added new ${label}` }
         } else {
             return { status: 'fail', error: values.error.issues }
@@ -96,8 +110,13 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
         const id_to_delete = data.get('id')
         if (typeof id_to_delete === 'string') {
             const { id } = getTableColumns(table)
+            const name = getTableName(table)
             await db.delete(table).where(eq(id, parseInt(id_to_delete)))
             await list().refresh()
+            await db.insert(audit).values({
+                message: 'user deleted stuff',
+                payload: { name, id_to_delete }
+            })
             return { status: 'success', message: 'Successfully deleted' }
         } else {
             return { status: 'fail', message: 'Could not delete' }

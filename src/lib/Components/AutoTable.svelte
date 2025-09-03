@@ -67,7 +67,9 @@
 					<tr class="odd:bg-neutral-50 hover:bg-sky-50">
 						{#each Object.entries(item) as [k, i]}
 							{@const format = config && config[k] ? format_funcs[config[k]] : id}
-							<td class={td_classes} title={i}>{format(i)}</td>
+							<td class={td_classes} title={i}>
+								<pre>{JSON.stringify(i, null, 2)}</pre>
+							</td>
 						{/each}
 						<td class={td_classes}>
 							<button
