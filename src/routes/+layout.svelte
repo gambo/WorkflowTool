@@ -10,7 +10,7 @@
 </script>
 
 <App>
-	<div class="grid h-full grid-cols-[200px_auto] p-4 text-slate-800">
+	<div class="grid h-full grid-cols-[200px_auto] p-4 text-slate-600">
 		<div>
 			<MainMenu />
 		</div>
