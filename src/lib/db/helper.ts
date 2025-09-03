@@ -1,4 +1,4 @@
-import { form, getRequestEvent, query } from "$app/server";
+import { form, query } from "$app/server";
 import { db } from "$lib/db";
 import type { RemoteForm } from "@sveltejs/kit";
 import { asc, desc, eq, getTableColumns, getTableName, Table } from 'drizzle-orm'
@@ -32,11 +32,6 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
     const editSchema = createUpdateSchema(table, refinements);
     const list = query(async () => {
         const ret = await db.select().from(table as T)
-        const { locals } = await getRequestEvent()
-        await db.insert(audit).values({
-            message: 'user did list stuff',
-            payload: locals
-        })
         return ret
     })
 
@@ -46,6 +41,8 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
     })
     const list_desc_by = query(z.string(), async (str: string) => {
         const cols = getTableColumns(table)[str]
+        const name = getTableName(table)
+        await db.insert(audit).values({ message: `getting table ${name} sorted by column ${str}` })
         return await db.select().from(table).orderBy(desc(cols))
     })
 

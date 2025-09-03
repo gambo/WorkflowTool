@@ -1,4 +1,5 @@
 import { enabled_endpoints } from '$lib/db/enabled_endpoints.js';
+import { } from '$lib/db/enabled_endpoints.js';
 
 export async function load({ data }) {
     const { endpoint } = data;

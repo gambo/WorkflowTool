@@ -35,3 +35,7 @@ export const config = {
     table: audit,
     refinements,
 }
+
+export const table_config = {
+    payload: 'json'
+}
