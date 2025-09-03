@@ -9,6 +9,7 @@ export const doit = form(async () => {
         }
     ).returning({ id: menugroup.id })
     await db.insert(menu).values([
+        { label: 'Audit', path: '/content/audit', menugroup: admin_group[0].id, order: 1 },
         { label: 'Menu Items', path: '/content/menu', menugroup: admin_group[0].id, order: 1 },
         { label: 'Menu Groups', path: '/content/menugroup', menugroup: admin_group[0].id, order: 1 },
         { label: 'Column', path: '/content/column', menugroup: admin_group[0].id, order: 1 },
