@@ -7,6 +7,8 @@ import z, { ZodType } from 'zod'
 import type { $ZodIssue } from 'zod/v4/core';
 import { audit } from "./schema";
 
+const log = async (message: string, payload: unknown) => await db.insert(audit).values({ message, payload })
+
 type AddType = RemoteForm<
     | { status: 'success'; message: string }
     | { status: 'fail'; error: $ZodIssue[] | string }
@@ -41,8 +43,6 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
     })
     const list_desc_by = query(z.string(), async (str: string) => {
         const cols = getTableColumns(table)[str]
-        const name = getTableName(table)
-        await db.insert(audit).values({ message: `getting table ${name} sorted by column ${str}` })
         return await db.select().from(table).orderBy(desc(cols))
     })
 
@@ -64,10 +64,7 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
                 if (e instanceof Error) {
                     err = e.message
                 }
-                await db.insert(audit).values({
-                    message: 'user added something and it failed',
-                    payload: err
-                })
+                await log(`insert failed: ${err}`, { invalid, values })
                 return { status: 'fail', error: err }
             }
             await db.insert(audit).values({
@@ -76,6 +73,7 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
             })
             return { status: 'success', message: `Successfully added new ${label}` }
         } else {
+            await log(`insert failed ${values.error.message}`, { invalid, values })
             return { status: 'fail', error: values.error.issues }
         }
     })
