@@ -15,6 +15,7 @@
 	let { data }: Props = $props();
 </script>
 
+<pre>{JSON.stringify(data.table_config, null, 2)}</pre>
 <div class="mb-8 flex items-center justify-between border-b border-b-slate-200 pb-2">
 	<Heading {...data} />
 	<Dialog>
@@ -28,10 +29,4 @@
 		<AutoForm schema={data.form} add={data.add} />
 	</Dialog>
 </div>
-<AutoTable
-	{...data}
-	config={{
-		created: 'date',
-		check: 'boolean'
-	}}
-/>
+<AutoTable {...data} />

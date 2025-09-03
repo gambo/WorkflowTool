@@ -19,5 +19,10 @@ export const config = {
     label: 'Menu Group',
     description: 'Manage Menu Group',
     table: menugroup,
-    refinements,
+    refinements
+}
+
+export const table_config = {
+    id: 'number',
+    created: 'date'
 }

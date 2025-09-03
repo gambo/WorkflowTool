@@ -14,6 +14,8 @@ export async function load({ params }) {
     }
     type ImportFile = { schema: Schema, config: Config }
     const { schema, config }: ImportFile = await import(`$lib/db/${endpoint}/schema.server.ts`).then(x => x);
+    const table_config = await import(`$lib/db/${endpoint}/schema.server.ts`).then(x => x.table_config);
     const form = toJSONSchema(schema);
-    return { endpoint, form, label: config.label, description: config.description };
+    console.log(table_config)
+    return { endpoint, form, label: config.label, description: config.description, table_config };
 }

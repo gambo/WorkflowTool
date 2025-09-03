@@ -29,3 +29,8 @@ export const config = {
     table,
     refinements,
 }
+
+export const table_config = {
+    color: 'color',
+    created: 'date'
+}

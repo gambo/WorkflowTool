@@ -29,8 +29,6 @@ export const refinements = {
     order: z.coerce.number().min(0, 'Order must positive').meta({ widget: 'number' }),
 } satisfies BuildRefine<typeof menu, undefined>
 
-
-
 export const schema = createInsertSchema(menu, refinements);
 
 export const config = {
