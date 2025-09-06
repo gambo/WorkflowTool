@@ -13,31 +13,6 @@
 	}
 }
 
-@layer utilities {
-	.bg-stripes {
-		--gap: 6px;
-		background: repeating-linear-gradient(
-			var(--angle, 45deg),
-			var(--bg, transparent) 0,
-			var(--bg, transparent) var(--gap),
-			var(--fg, var(--color-theme-100)) var(--gap),
-			var(--fg, var(--color-theme-100)) calc(var(--gap) + var(--width, 0.5px))
-		);
-	}
-	.bg-dots {
-		background: radial-gradient(
-			circle,
-			var(--fg, var(--color-theme-100)) var(--size, 1.5px),
-			var(--bg, transparent) var(--size, 1.5px)
-		);
-		background-size: var(--space, 4px) var(--space, 4px);
-	}
-	.squircle {
-		border-radius: 30% / 50%;
-		corner-shape: superellipse(1.7);
-	}
-}
-
 html {
 	/* color-scheme: light dark; */
 	font-family: var(--font-sans);
