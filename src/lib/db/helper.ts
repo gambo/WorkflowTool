@@ -55,6 +55,7 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
     const add: AddType = form(async (data) => {
         const invalid = Object.fromEntries(data.entries())
         const values = await insertSchema.safeParseAsync(invalid)
+        const table_name = getTableName(table)
         if (values.success) {
             try {
                 await db.insert(table).values(values.data)
@@ -64,13 +65,10 @@ export const crud = <T extends Table>(config: CrudConfig<T>) => {
                 if (e instanceof Error) {
                     err = e.message
                 }
-                await log(`insert failed: ${err}`, { invalid, values })
+                await log(`insert failed ${err}`, { invalid, values })
                 return { status: 'fail', error: err }
             }
-            await db.insert(audit).values({
-                message: 'user added stuff',
-                payload: values.data
-            })
+            await log(`inserted entry into ${table_name}`, { values })
             return { status: 'success', message: `Successfully added new ${label}` }
         } else {
             await log(`insert failed ${values.error.message}`, { invalid, values })

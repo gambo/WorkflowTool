@@ -1,3 +1,4 @@
+import type { AutoTableType } from "$lib/Components/AutoTable.svelte";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, type BuildRefine } from "drizzle-zod";
 // import z from "zod";
@@ -25,4 +26,4 @@ export const config = {
 export const table_config = {
     id: 'number',
     created: 'date'
-}
+} satisfies Partial<Record<keyof typeof menugroup['$inferInsert'], AutoTableType>>

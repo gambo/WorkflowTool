@@ -1,10 +1,22 @@
-<script lang="ts" generics="T extends Array<Record<string, any>> = Record<string, any>[]">
+<script module>
 	import Date from '$lib/Components/Formatters/Date.svelte';
 	import Color from '$lib/Components/Formatters/Color.svelte';
 	import Num from '$lib/Components/Formatters/Number.svelte';
 	import Str from '$lib/Components/Formatters/String.svelte';
 	import YesNo from '$lib/Components/Formatters/YesNo.svelte';
 	import Json from '$lib/Components/Formatters/Json.svelte';
+	const format = {
+		date: Date,
+		boolean: YesNo,
+		number: Num,
+		string: Str,
+		color: Color,
+		json: Json
+	};
+	export type AutoTableType = keyof typeof format;
+</script>
+
+<script lang="ts" generics="T extends Array<Record<string, any>> = Record<string, any>[]">
 	import { chevron, trash_icon } from '$lib/Icons.svelte';
 	import type { RemoteForm, RemoteQueryFunction } from '@sveltejs/kit';
 	import { fly, slide } from 'svelte/transition';
@@ -20,14 +32,6 @@
 	let { list, list_asc_by, list_desc_by, del, table_config = {} }: Props = $props();
 	const td_classes = 'px-2 py-1 max-w-80 truncate';
 	const id = (x: any) => x;
-	const format = {
-		date: Date,
-		boolean: YesNo,
-		number: Num,
-		string: Str,
-		color: Color,
-		json: Json
-	};
 	let dlist = $derived(list);
 	let sorters: Record<string, 'asc' | 'desc' | undefined> = $state({});
 	const sort = (by: string) => {
