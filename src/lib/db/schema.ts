@@ -9,9 +9,10 @@ import { jobItems } from './jobItems/schema.server';
 import { login } from './login/schema.server';
 import { menu } from './menu/schema.server';
 import { menugroup } from './menugroup/schema.server';
+import { page } from './page/schema.server';
 import { relations } from 'drizzle-orm';
 
-export { audit, customer, item, job, column, user, session, jobItems, login, menu, menugroup }
+export { audit, customer, item, job, column, user, session, jobItems, login, menu, menugroup, page }
 
 export const jobRelations = relations(job, ({ many }) => ({
 	jobItems: many(jobItems)

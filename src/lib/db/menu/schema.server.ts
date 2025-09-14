@@ -2,6 +2,7 @@ import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, type BuildRefine } from "drizzle-zod";
 import { menugroup } from "../menugroup/schema.server";
 import z from "zod";
+import type { AutoTableType } from "$lib/Components/AutoTable.svelte";
 
 export const menu = sqliteTable('menu', {
     id: integer({ mode: 'number' }).primaryKey({ autoIncrement: true }),
@@ -37,3 +38,8 @@ export const config = {
     table: menu,
     refinements,
 }
+
+export const table_config = {
+    id: 'number',
+    created: 'date'
+} satisfies Partial<Record<keyof typeof menu['$inferInsert'], AutoTableType>>

@@ -8,6 +8,9 @@ declare global {
 		}
 	} // interface Error {}
 	// interface Locals {}
+	interface Module {
+		menu: ModuleMenu
+	}
 } // interface PageData {}
 // interface PageState {}
 

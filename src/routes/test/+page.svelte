@@ -1,17 +1,14 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import Header from './Header.svelte';
-	import Button from '$lib/Form/Button.svelte';
+	import Table from './Table.svelte';
 
 	type Props = {
 		children: Snippet;
 	};
 
 	let { children }: Props = $props();
+	let onedit = (d: number) => alert(`editing ${d}`);
+	let ondelete = (d: number) => alert(`deleteing ${d}`);
 </script>
 
-<Header title="Woo there" description="checkout the thing in the place">
-	{#snippet actionButtons()}
-		<Button>ok</Button>
-	{/snippet}
-</Header>
+<Table {onedit} {ondelete} />

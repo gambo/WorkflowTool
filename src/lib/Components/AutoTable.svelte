@@ -32,7 +32,7 @@
 	let { list, list_asc_by, list_desc_by, del, table_config = {} }: Props = $props();
 	const td_classes = 'px-2 py-1 max-w-80 truncate';
 	const id = (x: any) => x;
-	let dlist = $derived(list);
+	let dlist = $derived(() => list_desc_by('id'));
 	let sorters: Record<string, 'asc' | 'desc' | undefined> = $state({});
 	const sort = (by: string) => {
 		if (!sorters[by]) {
@@ -86,7 +86,7 @@
 									<Comp value={i} />
 								</td>
 							{:else}
-								<td>{i}</td>
+								<td class={td_classes} title={i}>{i}</td>
 							{/if}
 						{/each}
 						<td class={td_classes}>
