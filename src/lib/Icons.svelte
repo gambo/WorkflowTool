@@ -1,8 +1,11 @@
-<script module>
+<script module lang="ts">
+	import type { ClassValue } from 'svelte/elements';
+
 	export { workflow_icon, trash_icon, spinner_icon, edit_icon, add_icon, priority_up, chevron };
+	type ClassValueOrEmpty = ClassValue | undefined;
 </script>
 
-{#snippet priority_up()}
+{#snippet priority_up(class_: ClassValueOrEmpty = undefined)}
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width="16"
@@ -13,12 +16,11 @@
 		stroke-width="2"
 		stroke-linecap="round"
 		stroke-linejoin="round"
-		class="lucide lucide-arrow-up-icon lucide-arrow-up"
-		><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></svg
+		class={class_}><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></svg
 	>
 {/snippet}
 
-{#snippet add_icon()}
+{#snippet add_icon(class_: ClassValueOrEmpty = undefined)}
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width="16"
@@ -29,11 +31,11 @@
 		stroke-width="2"
 		stroke-linecap="round"
 		stroke-linejoin="round"
-		class="lucide lucide-plus-icon lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg
+		class={class_}><path d="M5 12h14" /><path d="M12 5v14" /></svg
 	>
 {/snippet}
 
-{#snippet workflow_icon()}
+{#snippet workflow_icon(class_: ClassValueOrEmpty = undefined)}
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width="16"
@@ -44,7 +46,7 @@
 		stroke-width="2"
 		stroke-linecap="round"
 		stroke-linejoin="round"
-		class="lucide lucide-workflow-icon lucide-workflow"
+		class={class_}
 		><rect width="8" height="8" x="3" y="3" rx="2" /><path d="M7 11v4a2 2 0 0 0 2 2h4" /><rect
 			width="8"
 			height="8"
@@ -55,7 +57,7 @@
 	>
 {/snippet}
 
-{#snippet trash_icon()}
+{#snippet trash_icon(class_: ClassValueOrEmpty = undefined)}
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width="12"
@@ -66,14 +68,14 @@
 		stroke-width="2"
 		stroke-linecap="round"
 		stroke-linejoin="round"
-		class="lucide lucide-trash2-icon lucide-trash-2"
+		class={class_}
 		><path d="M10 11v6" /><path d="M14 11v6" /><path
 			d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"
 		/><path d="M3 6h18" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /></svg
 	>
 {/snippet}
 
-{#snippet spinner_icon()}
+{#snippet spinner_icon(class_: ClassValueOrEmpty = undefined)}
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width="16"
@@ -84,12 +86,11 @@
 		stroke-width="2"
 		stroke-linecap="round"
 		stroke-linejoin="round"
-		class="lucide lucide-loader-circle-icon lucide-loader-circle"
-		><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg
+		class={class_}><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg
 	>
 {/snippet}
 
-{#snippet edit_icon()}
+{#snippet edit_icon(class_: ClassValueOrEmpty = undefined)}
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width="16"
@@ -100,7 +101,7 @@
 		stroke-width="2"
 		stroke-linecap="round"
 		stroke-linejoin="round"
-		class="lucide lucide-file-pen-line-icon lucide-file-pen-line"
+		class={class_}
 		><path
 			d="m18 5-2.414-2.414A2 2 0 0 0 14.172 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2"
 		/><path
@@ -109,7 +110,7 @@
 	>
 {/snippet}
 
-{#snippet chevron()}
+{#snippet chevron(class_: ClassValueOrEmpty = undefined)}
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width="16"
@@ -120,6 +121,6 @@
 		stroke-width="2"
 		stroke-linecap="round"
 		stroke-linejoin="round"
-		class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6" /></svg
+		class={class_}><path d="m6 9 6 6 6-6" /></svg
 	>
 {/snippet}

@@ -1,5 +1,6 @@
 test-results
 node_modules
+llms.txt
 
 # Output
 .output
